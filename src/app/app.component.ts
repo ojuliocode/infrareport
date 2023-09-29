@@ -15,11 +15,45 @@ export class AppComponent implements OnInit {
       apiKey: GOOGLE_MAPS_API_KEY,
     });
 
-    loader.load().then(() => {
-      new google.maps.Map(document.getElementById('map') as HTMLElement, {
-        center: { lat: 51, lng: 6 },
-        zoom: 15,
+    this.getPosition()
+      .then((pos) => {
+        loader
+          .load()
+          .then(() => {
+            new google.maps.Map(document.getElementById('map') as HTMLElement, {
+              center: { lat: pos.lat, lng: pos.lng },
+              zoom: 20,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        loader
+          .load()
+          .then(() => {
+            new google.maps.Map(document.getElementById('map') as HTMLElement, {
+              center: { lat: 10, lng: 6 },
+              zoom: 15,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
+  }
+
+  getPosition(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (resp) => {
+          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
+        },
+        (err) => {
+          reject(err);
+        }
+      );
     });
   }
 }
