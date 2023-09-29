@@ -1,0 +1,27 @@
+name: Build Angular App
+
+on:
+  push:
+    branches:
+      - dev # Adjust this branch name to match your main branch
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18 # You can adjust the Node.js version if needed
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Angular App
+        run: npm run build # Modify this command if your build script is different
+
