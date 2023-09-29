@@ -1,4 +1,12 @@
+@import "src/styles/variables.scss";
+
 .full {
-  width: 100vw;
+  width: calc(100vw - $sidebar-width);
   height: 100vh;
+}
+
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 40%;
 }

@@ -10,6 +10,7 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { ReportLayoutComponent } from './layout/report-layout/report-layout/report-layout.component';
 import { ReportPageComponent } from './features/report-page/report-page/report-page.component';
 import { MatIconModule } from '@angular/material/icon';
+import { SpinnerComponent } from './shared/components/spinner/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     SidebarComponent,
     ReportLayoutComponent,
     ReportPageComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
