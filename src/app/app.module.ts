@@ -6,14 +6,25 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MapComponent } from './features/report-page/components/map/map.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
+import { ReportLayoutComponent } from './layout/report-layout/report-layout/report-layout.component';
+import { ReportPageComponent } from './features/report-page/report-page/report-page.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent],
+  declarations: [
+    AppComponent,
+    MapComponent,
+    SidebarComponent,
+    ReportLayoutComponent,
+    ReportPageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NoopAnimationsModule,
     MatButtonModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
