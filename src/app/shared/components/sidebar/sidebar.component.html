@@ -1,22 +1,12 @@
-<nav>
-  <div>
-    <a class="item"
-      ><mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="home"
-      ></mat-icon>
-
-      <span> </span>
-    </a>
-    <a class="item"
-      ><mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="home"
-      ></mat-icon>
-
-      <span> </span>
-    </a>
+<nav class="container">
+  <div class="buttons list">
+    <button mat-button *ngFor="let item of sidebarItems">
+      <a class="item"
+        ><mat-icon aria-hidden="false" aria-label="Example home icon">
+          {{ item.icon }}
+        </mat-icon>
+        <span class="label"> {{ item.label }} </span>
+      </a>
+    </button>
   </div>
 </nav>

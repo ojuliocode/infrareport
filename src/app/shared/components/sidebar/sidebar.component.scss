@@ -1,5 +1,26 @@
-.item {
-  flex-direction: column;
+@import "/src/styles/variables.scss";
+
+.container {
+  width: $sidebar-width;
+}
+
+.list {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+}
+
+.buttons {
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 5px;
+}
+
+.label {
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
 }
