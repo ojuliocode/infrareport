@@ -9,6 +9,7 @@ import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
 })
 export class MapComponent implements OnInit {
   title = 'infrareport';
+  mapLoaded: boolean = false;
 
   ngOnInit(): void {
     let loader = new Loader({
@@ -23,6 +24,9 @@ export class MapComponent implements OnInit {
             new google.maps.Map(document.getElementById('map') as HTMLElement, {
               center: { lat: pos.lat, lng: pos.lng },
               zoom: 17,
+              streetViewControl: false,
+              clickableIcons: false,
+              //disableDefaultUI: true, Can be option for the user
             });
           })
           .catch((err) => {
@@ -41,6 +45,9 @@ export class MapComponent implements OnInit {
           .catch((err) => {
             console.log(err);
           });
+      })
+      .finally(() => {
+        this.mapLoaded = true;
       });
   }
 

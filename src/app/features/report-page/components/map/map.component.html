@@ -1,3 +1,4 @@
 <div>
-  <div id="map" class="full"></div>
+  <div id="map" class="full" *ngIf="mapLoaded"></div>
+  <app-spinner *ngIf="!mapLoaded" class="spinner"> </app-spinner>
 </div>

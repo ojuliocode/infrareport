@@ -1,0 +1,49 @@
+@import "/src/styles/variables.scss";
+
+.container {
+  width: $sidebar-width;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-items-container {
+}
+
+.sidebar-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 5px;
+}
+
+.label {
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.title,
+img {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: fit-content;
+}
+
+header {
+  margin-bottom: 30%;
+}
+
+mat-icon {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.extra-item {
+  position: absolute;
+  bottom: 4em;
+  width: $sidebar-width;
+}
