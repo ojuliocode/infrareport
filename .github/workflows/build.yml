@@ -22,6 +22,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: "Create prod file"
+        run: cd src && mkdir environments && cd environments && echo "export const GOOGLE_MAPS_API_KEY = '${{ secrets.GOOGLE_MAPS_API_KEY }}'" > environment.prod.ts
+
       - name: Build Angular App
         run: npm run build # Modify this command if your build script is different
 
