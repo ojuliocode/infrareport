@@ -7,17 +7,28 @@ import { SidebarItem } from '../../models/sidebar-item.model';
 })
 export class SidebarComponent implements OnInit {
   sidebarItems: SidebarItem[] = [];
+  sideBarCustomItem: SidebarItem = {
+    label: 'Sair',
+    icon: 'logout',
+    height: '3.5em',
+  };
+
   ngOnInit(): void {
     this.sidebarItems = [
       {
-        label: 'Home',
+        label: 'Ocorrências',
         icon: 'home',
-        height: 20,
+        height: '3.5em',
       },
       {
-        label: 'Ocurrences',
+        label: 'Gráficos',
         icon: 'data_usage',
-        height: 20,
+        height: '3.5em',
+      },
+      {
+        label: 'Filtrar',
+        icon: 'sort',
+        height: '3.5em',
       },
     ];
   }
