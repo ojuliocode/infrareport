@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
-
+// TODO: se usuario for cidadao, zoom e latitude inicial vao ser X. Caso cidade, vai ser Y
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -10,6 +10,7 @@ import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
 export class MapComponent implements OnInit {
   title = 'infrareport';
   mapLoaded: boolean = false;
+  positionToRender = { lat: 0, lng: 0 };
 
   ngOnInit(): void {
     let loader = new Loader({
@@ -18,35 +19,33 @@ export class MapComponent implements OnInit {
 
     this.getPosition()
       .then((pos) => {
-        loader
-          .load()
-          .then(() => {
-            new google.maps.Map(document.getElementById('map') as HTMLElement, {
-              center: { lat: pos.lat, lng: pos.lng },
-              zoom: 17,
-              streetViewControl: false,
-              clickableIcons: false,
-              //disableDefaultUI: true, Can be option for the user
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        this.positionToRender = {
+          lat: pos.lat,
+          lng: pos.lng,
+        };
       })
       .catch((err) => {
+        this.positionToRender = {
+          lat: 10,
+          lng: 6,
+        };
+        alert('Localidade não foi fornecida');
+      })
+      .finally(() => {
         loader
           .load()
           .then(() => {
             new google.maps.Map(document.getElementById('map') as HTMLElement, {
-              center: { lat: 10, lng: 6 },
+              center: {
+                lat: this.positionToRender.lat,
+                lng: this.positionToRender.lng,
+              },
               zoom: 15,
             });
           })
           .catch((err) => {
             console.log(err);
           });
-      })
-      .finally(() => {
         this.mapLoaded = true;
       });
   }
