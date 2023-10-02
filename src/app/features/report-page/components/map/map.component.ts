@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateOccurrenceDialogComponent } from '../create-occurrence-dialog/create-occurrence-dialog.component';
+
 // TODO: se usuario for cidadao, zoom e latitude inicial vao ser X. Caso cidade, vai ser Y
 @Component({
   selector: 'app-map',
@@ -12,6 +15,7 @@ export class MapComponent implements OnInit {
   mapLoaded: boolean = false;
   positionToRender = { lat: 0, lng: 0 };
 
+  constructor(private dialog: MatDialog) {}
   ngOnInit(): void {
     let loader = new Loader({
       apiKey: GOOGLE_MAPS_API_KEY,
@@ -35,12 +39,26 @@ export class MapComponent implements OnInit {
         loader
           .load()
           .then(() => {
-            new google.maps.Map(document.getElementById('map') as HTMLElement, {
-              center: {
-                lat: this.positionToRender.lat,
-                lng: this.positionToRender.lng,
-              },
-              zoom: 15,
+            const map = new google.maps.Map(
+              document.getElementById('map') as HTMLElement,
+              {
+                center: {
+                  lat: this.positionToRender.lat,
+                  lng: this.positionToRender.lng,
+                },
+                zoom: 15,
+              }
+            );
+
+            map.addListener('click', (mapsMouseEvent: any) => {
+              const location = mapsMouseEvent.latLng.toJSON();
+
+              this.dialog.open(CreateOccurrenceDialogComponent, {
+                panelClass: 'create-occurrence-dialog',
+                data: {
+                  location: location,
+                },
+              });
             });
           })
           .catch((err) => {
