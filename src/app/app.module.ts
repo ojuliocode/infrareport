@@ -11,6 +11,13 @@ import { ReportLayoutComponent } from './layout/report-layout/report-layout/repo
 import { ReportPageComponent } from './features/report-page/report-page/report-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { SpinnerComponent } from './shared/components/spinner/spinner/spinner.component';
+import { CreateOccurrenceDialogComponent } from './features/report-page/components/create-occurrence-dialog/create-occurrence-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -20,6 +27,7 @@ import { SpinnerComponent } from './shared/components/spinner/spinner/spinner.co
     ReportLayoutComponent,
     ReportPageComponent,
     SpinnerComponent,
+    CreateOccurrenceDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +35,12 @@ import { SpinnerComponent } from './shared/components/spinner/spinner/spinner.co
     NoopAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
+    FormsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
