@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SidebarItem } from '../../models/sidebar-item.model';
+
+// TODO: preciso colocar condicional pra quando o user for cidadao ou prefeitura (botao de add)
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -18,17 +20,17 @@ export class SidebarComponent implements OnInit {
       {
         label: 'Ocorrências',
         icon: 'home',
-        height: '3.5em',
+        height: '5em',
       },
       {
         label: 'Gráficos',
         icon: 'data_usage',
-        height: '3.5em',
+        height: '5em',
       },
       {
         label: 'Filtrar',
         icon: 'sort',
-        height: '3.5em',
+        height: '5em',
       },
     ];
   }
