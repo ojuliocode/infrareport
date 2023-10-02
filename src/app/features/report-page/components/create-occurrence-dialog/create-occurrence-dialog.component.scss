@@ -1,0 +1,19 @@
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 400px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.actions {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
