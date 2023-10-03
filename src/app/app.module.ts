@@ -18,6 +18,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 import { MatInputModule } from '@angular/material/input';
+import { AuthLayoutComponent } from './layout/auth-layout/auth-layout/auth-layout.component';
+import { RegisterComponent } from './layout/auth-layout/components/register/register.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import {
+  AngularFireAuth,
+  AngularFireAuthModule,
+} from '@angular/fire/compat/auth';
+
+import {
+  AngularFirestore,
+  AngularFirestoreModule,
+} from '@angular/fire/compat/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -28,6 +46,8 @@ import { MatInputModule } from '@angular/material/input';
     ReportPageComponent,
     SpinnerComponent,
     CreateOccurrenceDialogComponent,
+    AuthLayoutComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,8 +61,19 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatSelectModule,
     MatFormFieldModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
   ],
-  providers: [],
+  providers: [
+    AngularFireModule,
+    AngularFireAuth,
+    AngularFirestore,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
