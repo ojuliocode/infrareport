@@ -21,6 +21,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,11 @@ export class CitizenService {
   citizenId: string;
   citizen: Citizen;
 
-  constructor(private firestore: Firestore, private auth: Auth) {
+  constructor(
+    private firestore: Firestore,
+    private auth: Auth,
+    private router: Router
+  ) {
     this.citizen$ = authState(this.auth as any).pipe(
       switchMap((citizen) => {
         if (citizen) {
@@ -79,6 +84,7 @@ export class CitizenService {
     signInWithEmailAndPassword(this.auth, email, password)
       .then(async (info) => {
         console.log('Signing In');
+        this.router.navigate(['/map']);
       })
       .catch(async (err) => {
         console.log(err);

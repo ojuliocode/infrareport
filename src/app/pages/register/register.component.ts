@@ -27,6 +27,17 @@ export class RegisterComponent implements OnInit {
     password: '',
     displayName: '',
   };
+  type;
+  citizenFormTypes = [
+    {
+      value: 'citizen',
+      displayName: 'Cidadão',
+    },
+    {
+      value: 'town',
+      displayName: 'Cidade',
+    },
+  ];
   constructor(
     private auth: AngularFireAuth,
     private fb: UntypedFormBuilder,
@@ -41,16 +52,18 @@ export class RegisterComponent implements OnInit {
       addressLine2: [''],
       cityZipCode: [''],
       city: [''],
+      type: [''],
     });
   }
 
   async saveUser() {
     this.fillForm();
-    const id = this.citizenService
-      .createCitizen(this.citizen)
-      .then((result) => {
+    let id;
+    if (this.type == 'citizen') {
+      id = this.citizenService.createCitizen(this.citizen).then((result) => {
         console.log('Creating user');
       });
+    }
     return id;
   }
 
@@ -65,5 +78,9 @@ export class RegisterComponent implements OnInit {
     this.citizen.address.cityZipCode =
       this.createUserForm.get('cityZipCode')?.value;
     this.citizen.address.city = this.createUserForm.get('city')?.value;
+  }
+
+  onTypeChange(event) {
+    this.type = event.value;
   }
 }

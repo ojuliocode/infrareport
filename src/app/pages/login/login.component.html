@@ -26,6 +26,21 @@
         </mat-form-field>
       </div>
     </div>
+
+    <div>
+      <span> Tipo de usuário </span>
+      <mat-form-field>
+        <mat-select (selectionChange)="onTypeChange($event)">
+          <mat-option
+            *ngFor="let option of citizenFormTypes"
+            [value]="option.value"
+            [id]="option.value"
+          >
+            {{ option.displayName }}
+          </mat-option>
+        </mat-select></mat-form-field
+      >
+    </div>
     <div class="actions">
       <button mat-button>Cancelar</button>
       <button mat-raised-button (click)="login()">Salvar</button>

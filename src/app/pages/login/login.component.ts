@@ -12,6 +12,17 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
+  type;
+  citizenFormTypes = [
+    {
+      value: 'citizen',
+      displayName: 'Cidadão',
+    },
+    {
+      value: 'town',
+      displayName: 'Cidade',
+    },
+  ];
   constructor(
     private fb: UntypedFormBuilder,
     private citizenService: CitizenService
@@ -25,7 +36,9 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.fillForm();
-    this.citizenService.signIn(this.email, this.password);
+    if (this.type == 'citizen') {
+      this.citizenService.signIn(this.email, this.password);
+    }
   }
 
   /**
@@ -34,5 +47,8 @@ export class LoginComponent implements OnInit {
   private fillForm() {
     this.email = this.loginForm.get('email').value;
     this.password = this.loginForm.get('password').value;
+  }
+  onTypeChange(event) {
+    this.type = event.value;
   }
 }
