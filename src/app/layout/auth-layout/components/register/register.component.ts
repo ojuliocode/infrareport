@@ -42,7 +42,13 @@ export class RegisterComponent implements OnInit {
 
   async saveUser() {
     this.fillForm();
-    const id = this.citizenService.createCitizen(this.citizen);
+    const id = this.citizenService
+      .createCitizen(this.citizen)
+      .then((result) => {
+        console.log('result >>>');
+        console.log(result);
+        console.log(this.citizenService.citizen);
+      });
     return id;
   }
 
