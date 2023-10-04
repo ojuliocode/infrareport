@@ -55,17 +55,19 @@ export class CitizenService {
    * @returns {Promise}
    */
   async createCitizen(citizen: Citizen): Promise<void> {
-    createUserWithEmailAndPassword(
-      this.auth,
-      citizen.email,
-      citizen.password
-    ).then(async (e) => {
-      const createdCitizen = await setDoc(
-        doc(this.firestore, `citizens/${e.user.uid}`),
-        citizen
-      );
-      return createdCitizen;
-    });
+    createUserWithEmailAndPassword(this.auth, citizen.email, citizen.password)
+      .then(async (e) => {
+        const createdCitizen = await setDoc(
+          doc(this.firestore, `citizens/${e.user.uid}`),
+          citizen
+        );
+        return createdCitizen;
+      })
+      .catch(async (e) => {
+        alert(
+          'Não foi possível criar o usuário. Por favor, cheque se todos os campos estão preenchidos corretamente'
+        );
+      });
   }
 
   /**
@@ -80,6 +82,9 @@ export class CitizenService {
       })
       .catch(async (err) => {
         console.log(err);
+        alert(
+          'Login não foi bem-sucedido. Por favor, cheque seu email e senha'
+        );
       });
   }
 }
