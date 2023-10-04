@@ -8,6 +8,7 @@ import {
   collection,
   doc,
   docData,
+  setDoc,
 } from '@angular/fire/firestore';
 import { Observable, lastValueFrom, of } from 'rxjs';
 import { Citizen } from 'src/app/shared/models/citizen.model';
@@ -18,6 +19,7 @@ import {
   authState,
   AuthModule,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
 } from '@angular/fire/auth';
 
 @Injectable({
@@ -52,15 +54,16 @@ export class CitizenService {
   }
 
   async createCitizen(citizen: Citizen) {
-    this.afa
-      .createUserWithEmailAndPassword(citizen.email, citizen.password)
-      .then(async (e) => {
-        const createdCitizen = await addDoc(
-          collection(this.firestore, 'citizens'),
-          citizen
-        );
-
-        return createdCitizen;
-      });
+    createUserWithEmailAndPassword(
+      this.auth,
+      citizen.email,
+      citizen.password
+    ).then(async (e) => {
+      const createdCitizen = await setDoc(
+        doc(this.firestore, `citizens/${e.user.uid}`),
+        citizen
+      );
+      return createdCitizen;
+    });
   }
 }
