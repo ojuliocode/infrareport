@@ -7,8 +7,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MapComponent } from './features/report-page/components/map/map.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
-import { ReportLayoutComponent } from './layout/report-layout/report-layout/report-layout.component';
-import { ReportPageComponent } from './features/report-page/report-page/report-page.component';
+import { ReportLayoutComponent } from './pages/report-layout/report-layout.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { SpinnerComponent } from './shared/components/spinner/spinner/spinner.component';
 import { CreateOccurrenceDialogComponent } from './features/report-page/components/create-occurrence-dialog/create-occurrence-dialog.component';
@@ -18,8 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 import { MatInputModule } from '@angular/material/input';
-import { AuthLayoutComponent } from './layout/auth-layout/auth-layout/auth-layout.component';
-import { RegisterComponent } from './layout/auth-layout/components/register/register.component';
+import { RegisterComponent } from './pages/register/register.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -36,7 +35,7 @@ import {
   AngularFirestoreModule,
 } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
-import { LoginComponent } from './layout/auth-layout/components/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +46,6 @@ import { LoginComponent } from './layout/auth-layout/components/login/login.comp
     ReportPageComponent,
     SpinnerComponent,
     CreateOccurrenceDialogComponent,
-    AuthLayoutComponent,
     RegisterComponent,
     LoginComponent,
   ],

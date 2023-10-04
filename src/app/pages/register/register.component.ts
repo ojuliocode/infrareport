@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { CitizenService } from 'src/app/core/services/citizen.service';
 import { Citizen } from 'src/app/shared/models/citizen.model';
 
@@ -31,8 +35,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.createUserForm = this.fb.group({
       displayName: [''],
-      email: [''],
-      password: [''],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
       addressLine1: [''],
       addressLine2: [''],
       cityZipCode: [''],

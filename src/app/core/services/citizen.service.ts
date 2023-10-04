@@ -32,11 +32,7 @@ export class CitizenService {
   citizenId: string;
   citizen: Citizen;
 
-  constructor(
-    private afa: AngularFireAuth,
-    private firestore: Firestore,
-    private auth: Auth
-  ) {
+  constructor(private firestore: Firestore, private auth: Auth) {
     this.citizen$ = authState(this.auth as any).pipe(
       switchMap((citizen) => {
         if (citizen) {
@@ -53,7 +49,12 @@ export class CitizenService {
     );
   }
 
-  async createCitizen(citizen: Citizen) {
+  /**
+   * Creates a new citizen
+   * @param citizen {Citizen} Citizen to be created
+   * @returns {Promise}
+   */
+  async createCitizen(citizen: Citizen): Promise<void> {
     createUserWithEmailAndPassword(
       this.auth,
       citizen.email,
@@ -67,7 +68,12 @@ export class CitizenService {
     });
   }
 
-  async signIn(email, password) {
+  /**
+   * Sign citizen in
+   * @param email {string} Citizen email
+   * @param password {string} Citizen passwrod
+   */
+  async signIn(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then(async (info) => {
         console.log('Signing In');

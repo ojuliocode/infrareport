@@ -28,7 +28,10 @@ export class LoginComponent implements OnInit {
     this.citizenService.signIn(this.email, this.password);
   }
 
-  fillForm() {
+  /**
+   * Fills the local variables with form values
+   */
+  private fillForm() {
     this.email = this.loginForm.get('email').value;
     this.password = this.loginForm.get('password').value;
   }

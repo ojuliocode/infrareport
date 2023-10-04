@@ -1,0 +1,23 @@
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.container {
+  padding: 50px;
+  width: 80vw;
+  margin: auto;
+  border-radius: 30px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
