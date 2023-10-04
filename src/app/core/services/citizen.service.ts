@@ -66,4 +66,14 @@ export class CitizenService {
       return createdCitizen;
     });
   }
+
+  async signIn(email, password) {
+    signInWithEmailAndPassword(this.auth, email, password)
+      .then(async (info) => {
+        console.log(info);
+      })
+      .catch(async (err) => {
+        console.log(err);
+      });
+  }
 }

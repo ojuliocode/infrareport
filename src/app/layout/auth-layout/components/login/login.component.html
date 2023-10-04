@@ -1,0 +1,32 @@
+<form class="container column" [formGroup]="loginForm">
+  <div class="row">
+    <div class="full-width">
+      <span> Email </span>
+      <mat-form-field class="full-width">
+        <mat-label> Email </mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Nome"
+          formControlName="email"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div>
+    <span> Senha </span>
+    <mat-form-field class="full-width">
+      <mat-label> Senha </mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Nome"
+        formControlName="password"
+      />
+    </mat-form-field>
+  </div>
+  <div class="actions">
+    <button mat-button>Cancelar</button>
+    <button mat-raised-button (click)="login()">Login</button>
+  </div>
+</form>

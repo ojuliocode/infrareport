@@ -36,6 +36,7 @@ import {
   AngularFirestoreModule,
 } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
+import { LoginComponent } from './layout/auth-layout/components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     CreateOccurrenceDialogComponent,
     AuthLayoutComponent,
     RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
