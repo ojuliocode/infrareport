@@ -45,9 +45,7 @@ export class RegisterComponent implements OnInit {
     const id = this.citizenService
       .createCitizen(this.citizen)
       .then((result) => {
-        console.log('result >>>');
-        console.log(result);
-        console.log(this.citizenService.citizen);
+        console.log('Creating user');
       });
     return id;
   }

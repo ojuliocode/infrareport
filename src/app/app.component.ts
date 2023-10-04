@@ -15,8 +15,7 @@ export class AppComponent implements OnInit {
   constructor(private citizenService: CitizenService) {}
   async ngOnInit() {
     this.citizenService.citizen$.pipe(first()).subscribe((citizen: Citizen) => {
-      console.log('citizen no layout');
-      console.log(citizen);
+      console.log('App Pipe');
     });
   }
 }

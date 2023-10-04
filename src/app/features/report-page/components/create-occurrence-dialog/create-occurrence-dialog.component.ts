@@ -26,7 +26,6 @@ export class CreateOccurrenceDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.data);
     this.createOcurrenceForm = this.fb.group({
       type: [''],
       comment: [''],

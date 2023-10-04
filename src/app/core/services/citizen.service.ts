@@ -70,7 +70,7 @@ export class CitizenService {
   async signIn(email, password) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then(async (info) => {
-        console.log(info);
+        console.log('Signing In');
       })
       .catch(async (err) => {
         console.log(err);
