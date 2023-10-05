@@ -54,6 +54,8 @@ mat-icon {
     bottom: 0;
     position: absolute;
     height: $sidebar-responsible-height;
+    background-color: white;
+    z-index: 2;
   }
 
   .list {
