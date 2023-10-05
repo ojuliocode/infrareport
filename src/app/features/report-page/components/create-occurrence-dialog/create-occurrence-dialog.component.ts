@@ -3,7 +3,6 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OCCURRENCE_TYPES } from 'src/app/shared/constants/occurrence.constants';
 
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 type Data = {
   location: {
     lat: number;
@@ -21,8 +20,7 @@ export class CreateOccurrenceDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Data,
-    private fb: UntypedFormBuilder,
-    private afa: AngularFireAuth
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {

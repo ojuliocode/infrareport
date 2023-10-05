@@ -1,27 +1,21 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+  Auth,
+  User,
+  authState,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from '@angular/fire/auth';
 import {
   DocumentReference,
   Firestore,
-  addDoc,
-  collection,
   doc,
-  docData,
   setDoc,
 } from '@angular/fire/firestore';
-import { Observable, lastValueFrom, of } from 'rxjs';
-import { Citizen } from 'src/app/shared/models/citizen.model';
-import { first, switchMap } from 'rxjs/operators';
-import {
-  User,
-  Auth,
-  authState,
-  AuthModule,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Citizen } from 'src/app/shared/models/citizen.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +23,7 @@ import { Router } from '@angular/router';
 export class CitizenService {
   citizen$: Observable<any>;
   user$: Observable<User>;
-  firebaseCitizen;
+  firebaseCitizen: User;
   citizenId: string;
   citizen: Citizen;
 

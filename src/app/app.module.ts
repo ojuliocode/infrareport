@@ -30,10 +30,6 @@ import {
   AngularFireAuthModule,
 } from '@angular/fire/compat/auth';
 
-import {
-  AngularFirestore,
-  AngularFirestoreModule,
-} from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { LoginComponent } from './pages/login/login.component';
 
@@ -66,12 +62,10 @@ import { LoginComponent } from './pages/login/login.component';
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
     AngularFireAuthModule,
-    AngularFirestoreModule,
   ],
   providers: [
     AngularFireModule,
     AngularFireAuth,
-    AngularFirestore,
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
   ],
   bootstrap: [AppComponent],

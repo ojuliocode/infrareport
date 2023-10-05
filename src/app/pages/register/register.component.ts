@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -27,7 +26,7 @@ export class RegisterComponent implements OnInit {
     password: '',
     displayName: '',
   };
-  type;
+  type: any;
   citizenFormTypes = [
     {
       value: 'citizen',
@@ -39,7 +38,6 @@ export class RegisterComponent implements OnInit {
     },
   ];
   constructor(
-    private auth: AngularFireAuth,
     private fb: UntypedFormBuilder,
     private citizenService: CitizenService
   ) {}
@@ -80,7 +78,7 @@ export class RegisterComponent implements OnInit {
     this.citizen.address.city = this.createUserForm.get('city')?.value;
   }
 
-  onTypeChange(event) {
+  onTypeChange(event: any) {
     this.type = event.value;
   }
 }

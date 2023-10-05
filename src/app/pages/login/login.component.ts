@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
-  type;
+  type: any;
   citizenFormTypes = [
     {
       value: 'citizen',
@@ -45,10 +45,10 @@ export class LoginComponent implements OnInit {
    * Fills the local variables with form values
    */
   private fillForm() {
-    this.email = this.loginForm.get('email').value;
-    this.password = this.loginForm.get('password').value;
+    this.email = this.loginForm.get('email')?.value;
+    this.password = this.loginForm.get('password')?.value;
   }
-  onTypeChange(event) {
+  onTypeChange(event: any) {
     this.type = event.value;
   }
 }
