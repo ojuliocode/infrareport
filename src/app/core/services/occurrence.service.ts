@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import {
+  DocumentData,
+  Firestore,
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+} from '@angular/fire/firestore';
 import { Occurrence } from 'src/app/shared/models/occurrence.model';
 
 @Injectable({
@@ -13,11 +20,15 @@ export class OccurrenceService {
    * @param occurrence {Occurence} Occurence to be created
    * @returns {Promise}
    */
-  async createOccurence(occurrence: Occurrence, townId: string): Promise<void> {
-    const createdOccurence = await setDoc(
-      doc(this.firestore, `townList/${townId}/occurrences`),
+  async createOccurence(
+    occurrence: Occurrence,
+    townId: string
+  ): Promise<DocumentData> {
+    const createdOccurence = await addDoc(
+      collection(this.firestore, `town_list/${townId}/occurrences`),
       occurrence
     );
+
     return createdOccurence;
   }
 }
