@@ -65,6 +65,9 @@ export class CreateOccurrenceDialogComponent implements OnInit {
         .createOccurence(this.occurrence, this.townId)
         .then(() => {
           alert('Ocorrência criada com sucesso');
+        })
+        .catch(() => {
+          alert('Houve um erro ao criar a ocorrência');
         });
     } catch {
       alert('Houve um erro ao criar a ocorrência');

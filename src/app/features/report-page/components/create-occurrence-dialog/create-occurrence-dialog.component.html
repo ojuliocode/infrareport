@@ -25,7 +25,12 @@
     </mat-form-field>
 
     <mat-label> Imagem </mat-label>
-    <input type="file" formControlName="image" />
+    <input
+      type="file"
+      formControlName="image"
+      accept="image/*"
+      capture="environment"
+    />
 
     <div class="actions">
       <button mat-button>Cancelar</button>
