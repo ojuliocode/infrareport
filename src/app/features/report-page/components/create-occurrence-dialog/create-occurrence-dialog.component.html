@@ -3,10 +3,14 @@
   <mat-dialog-content class="column">
     <mat-label> Tipo de ocorrência </mat-label>
     <mat-form-field class="full-width">
-      <mat-select formControlName="type">
+      <mat-select (selectionChange)="onOccurenceTypeChanged($event)">
         <mat-option> none </mat-option>
-        <mat-option *ngFor="let option of occurrenceTypes">
-          {{ option }}
+        <mat-option
+          *ngFor="let option of occurrenceTypes"
+          [value]="option.value"
+          [id]="option.value"
+        >
+          {{ option.label }}
         </mat-option>
       </mat-select>
     </mat-form-field>
