@@ -6,6 +6,10 @@ import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'login',
+  },
+  {
     path: 'map',
     component: ReportLayoutComponent,
   },
@@ -21,7 +25,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
