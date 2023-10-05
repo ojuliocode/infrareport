@@ -1,0 +1,31 @@
+<p class="text-big-regular" mat-dialog-title>Nova ocorrência</p>
+<form [formGroup]="createOcurrenceForm" class="container">
+  <mat-dialog-content class="column">
+    <mat-label> Tipo de ocorrência </mat-label>
+    <mat-form-field class="full-width">
+      <mat-select formControlName="type">
+        <mat-option> none </mat-option>
+        <mat-option *ngFor="let option of occurrenceTypes">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-label> Comentário </mat-label>
+    <mat-form-field class="full-width">
+      <input
+        type="text"
+        matInput
+        placeholder="Comentário"
+        formControlName="comment"
+      />
+    </mat-form-field>
+
+    <mat-label> Imagem </mat-label>
+    <input type="file" formControlName="image" />
+
+    <div class="actions">
+      <button mat-button>Cancelar</button>
+      <button mat-raised-button>Salvar</button>
+    </div>
+  </mat-dialog-content>
+</form>

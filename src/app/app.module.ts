@@ -7,10 +7,31 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MapComponent } from './features/report-page/components/map/map.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
-import { ReportLayoutComponent } from './layout/report-layout/report-layout/report-layout.component';
-import { ReportPageComponent } from './features/report-page/report-page/report-page.component';
+import { ReportLayoutComponent } from './pages/report-layout/report-layout.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { SpinnerComponent } from './shared/components/spinner/spinner/spinner.component';
+import { CreateOccurrenceDialogComponent } from './features/report-page/components/create-occurrence-dialog/create-occurrence-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
+import { MatInputModule } from '@angular/material/input';
+import { RegisterComponent } from './pages/register/register.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import {
+  AngularFireAuth,
+  AngularFireAuthModule,
+} from '@angular/fire/compat/auth';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +41,9 @@ import { SpinnerComponent } from './shared/components/spinner/spinner/spinner.co
     ReportLayoutComponent,
     ReportPageComponent,
     SpinnerComponent,
+    CreateOccurrenceDialogComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,8 +51,23 @@ import { SpinnerComponent } from './shared/components/spinner/spinner/spinner.co
     NoopAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
+    FormsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()),
+    AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [
+    AngularFireModule,
+    AngularFireAuth,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
