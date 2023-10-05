@@ -10,6 +10,7 @@ import {
   DocumentReference,
   Firestore,
   doc,
+  getDoc,
   setDoc,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -25,7 +26,7 @@ export class CitizenService {
   user$: Observable<User>;
   firebaseCitizen: User;
   citizenId: string;
-  citizen: Citizen;
+  loggedCitizen: Citizen;
 
   constructor(
     private firestore: Firestore,
@@ -37,17 +38,18 @@ export class CitizenService {
         if (citizen) {
           this.firebaseCitizen = citizen;
           this.citizenId = citizen.uid;
-
-          const doca = doc(
-            this.firestore,
-            `citizens/${citizen.uid}`
-          ) as DocumentReference<Citizen>;
+          this.getCitizenById(this.citizenId).then((fetchedCitizen) => {
+            this.loggedCitizen = fetchedCitizen.data() as Citizen;
+          });
         }
         return of(null);
       })
     );
   }
 
+  async getCitizenById(id: any) {
+    return await getDoc(doc(this.firestore, `citizens/${id}`));
+  }
   /**
    * Creates a new citizen
    * @param citizen {Citizen} Citizen to be created
