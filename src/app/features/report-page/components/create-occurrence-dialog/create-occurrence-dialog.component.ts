@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { first, lastValueFrom } from 'rxjs';
 import { CitizenService } from 'src/app/core/services/citizen.service';
 import { OccurrenceService } from 'src/app/core/services/occurrence.service';
@@ -40,7 +40,8 @@ export class CreateOccurrenceDialogComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private citizenService: CitizenService,
     private townService: TownService,
-    private occurrenceService: OccurrenceService
+    private occurrenceService: OccurrenceService,
+    public dialogRef: MatDialogRef<CreateOccurrenceDialogComponent>
   ) {}
 
   ngOnInit(): void {
@@ -58,8 +59,18 @@ export class CreateOccurrenceDialogComponent implements OnInit {
   }
 
   saveOccurrence() {
-    this.fillForm();
-    this.occurrenceService.createOccurence(this.occurrence, this.townId);
+    try {
+      this.fillForm();
+      this.occurrenceService
+        .createOccurence(this.occurrence, this.townId)
+        .then(() => {
+          alert('Ocorrência criada com sucesso');
+        });
+    } catch {
+      alert('Houve um erro ao criar a ocorrência');
+    } finally {
+      this.dialogRef.close();
+    }
   }
   onOccurenceTypeChanged(event: any) {
     this.occurrence.type = event.value;
