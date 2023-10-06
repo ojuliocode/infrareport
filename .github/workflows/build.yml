@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dev # Adjust this branch name to match your main branch
-      - main
 
 jobs:
   build:

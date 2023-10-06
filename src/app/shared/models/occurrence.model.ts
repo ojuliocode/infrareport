@@ -6,7 +6,7 @@ export interface Occurrence {
   creationDate: string;
   location: {
     lat: number;
-    lng: string;
+    lng: number;
   };
-  image: File;
+  image?: File;
 }
