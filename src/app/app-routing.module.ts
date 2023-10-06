@@ -3,15 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReportLayoutComponent } from './pages/report-layout/report-layout.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
     path: 'map',
     component: ReportLayoutComponent,
+    canActivate: [AuthGuard],
   },
 
   {

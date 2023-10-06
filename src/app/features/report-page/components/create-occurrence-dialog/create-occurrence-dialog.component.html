@@ -3,10 +3,14 @@
   <mat-dialog-content class="column">
     <mat-label> Tipo de ocorrência </mat-label>
     <mat-form-field class="full-width">
-      <mat-select formControlName="type">
+      <mat-select (selectionChange)="onOccurenceTypeChanged($event)">
         <mat-option> none </mat-option>
-        <mat-option *ngFor="let option of occurrenceTypes">
-          {{ option }}
+        <mat-option
+          *ngFor="let option of occurrenceTypes"
+          [value]="option.value"
+          [id]="option.value"
+        >
+          {{ option.label }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -21,11 +25,16 @@
     </mat-form-field>
 
     <mat-label> Imagem </mat-label>
-    <input type="file" formControlName="image" />
+    <input
+      type="file"
+      formControlName="image"
+      accept="image/*"
+      capture="environment"
+    />
 
     <div class="actions">
       <button mat-button>Cancelar</button>
-      <button mat-raised-button>Salvar</button>
+      <button mat-raised-button (click)="saveOccurrence()">Salvar</button>
     </div>
   </mat-dialog-content>
 </form>
