@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install && npm run build
+      - run: cd src && mkdir environments && cd environments && echo "export const GOOGLE_MAPS_API_KEY = '${{ secrets.GOOGLE_MAPS_API_KEY }}'" > environment.prod.ts && echo "export const environment = ${{ secrets.FIREBASE_CONFIG }}" > environment.ts
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
