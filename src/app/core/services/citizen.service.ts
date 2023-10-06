@@ -10,6 +10,7 @@ import {
   DocumentReference,
   Firestore,
   doc,
+  docData,
   getDoc,
   setDoc,
 } from '@angular/fire/firestore';
@@ -41,6 +42,10 @@ export class CitizenService {
           this.getCitizenById(this.citizenId).then((fetchedCitizen) => {
             this.loggedCitizen = fetchedCitizen.data() as Citizen;
           });
+
+          const obs = getDoc(doc(this.firestore, `citizens/${this.citizenId}`));
+
+          return obs;
         }
         return of(null);
       })
