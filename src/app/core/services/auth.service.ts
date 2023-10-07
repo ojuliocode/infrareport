@@ -4,6 +4,7 @@ import {
   authState,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from '@angular/fire/auth';
 import {
   DocumentReference,
@@ -27,7 +28,7 @@ export class AuthService {
   user$: Observable<any>;
   firebaseUser: User;
   userId: string;
-  loggedUser: Town | Citizen;
+  loggedUser: Town | Citizen | undefined;
   type: string;
 
   constructor(
@@ -49,7 +50,7 @@ export class AuthService {
           );
 
           return obs;
-        }
+        } else this.loggedUser = undefined;
         return of(null);
       })
     );
@@ -100,7 +101,6 @@ export class AuthService {
     this.type = type;
     signInWithEmailAndPassword(this.auth, email, password)
       .then(async (info) => {
-        console.log('Signing In');
         this.router.navigate(['/map']);
       })
       .catch(async (err) => {
@@ -109,5 +109,11 @@ export class AuthService {
           'Login não foi bem-sucedido. Por favor, cheque seu email e senha'
         );
       });
+  }
+
+  async signOut() {
+    await signOut(this.auth).then((res) => {
+      this.router.navigate(['/login']);
+    });
   }
 }
