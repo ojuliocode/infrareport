@@ -3,8 +3,10 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateOccurrenceDialogComponent } from '../create-occurrence-dialog/create-occurrence-dialog.component';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 // TODO: se usuario for cidadao, zoom e latitude inicial vao ser X. Caso cidade, vai ser Y
+// TODO: se a ocorrencia for varias vezes a mesma, ver como da pra agrupar na hora de resolver
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -15,7 +17,7 @@ export class MapComponent implements OnInit {
   mapLoaded: boolean = false;
   positionToRender = { lat: 0, lng: 0 };
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private authService: AuthService) {}
   ngOnInit(): void {
     let loader = new Loader({
       apiKey: GOOGLE_MAPS_API_KEY,
@@ -39,6 +41,7 @@ export class MapComponent implements OnInit {
         loader
           .load()
           .then(() => {
+            console.log(this.authService.loggedUser);
             const map = new google.maps.Map(
               document.getElementById('map') as HTMLElement,
               {
