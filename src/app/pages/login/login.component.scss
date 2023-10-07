@@ -10,14 +10,20 @@
 }
 
 .container {
-  padding: 50px;
   width: 80vw;
   margin: auto;
   border-radius: 30px;
+  margin-top: 20px;
 }
 
 .item {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .row {
+    flex-direction: column;
+  }
 }
