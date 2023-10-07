@@ -4,6 +4,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Citizen } from 'src/app/shared/models/citizen.model';
 
@@ -25,9 +26,9 @@ export class RegisterCitizenComponent implements OnInit {
     },
     password: '',
     displayName: '',
-    type: '',
+    type: 'citizen',
   };
-  type: any;
+  type: any = 'citizen';
   citizenFormTypes = [
     {
       value: 'citizen',
@@ -40,7 +41,8 @@ export class RegisterCitizenComponent implements OnInit {
   ];
   constructor(
     private fb: UntypedFormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.createUserForm = this.fb.group({
@@ -59,7 +61,7 @@ export class RegisterCitizenComponent implements OnInit {
     this.fillForm();
     let id;
     id = this.authService.createUser(this.citizen, this.type).then((result) => {
-      console.log('Creating user');
+      this.router.navigate(['/map']);
     });
     return id;
   }
@@ -79,5 +81,9 @@ export class RegisterCitizenComponent implements OnInit {
 
   onTypeChange(event: any) {
     this.type = event.value;
+  }
+
+  registerTown() {
+    this.router.navigate(['/register-town']);
   }
 }
