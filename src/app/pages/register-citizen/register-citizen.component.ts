@@ -4,15 +4,15 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { CitizenService } from 'src/app/core/services/citizen.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { Citizen } from 'src/app/shared/models/citizen.model';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-register-citizen',
+  templateUrl: './register-citizen.component.html',
+  styleUrls: ['./register-citizen.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterCitizenComponent implements OnInit {
   createUserForm: UntypedFormGroup;
   citizen: Citizen = {
     email: '',
@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     },
     password: '',
     displayName: '',
+    type: '',
   };
   type: any;
   citizenFormTypes = [
@@ -39,7 +40,7 @@ export class RegisterComponent implements OnInit {
   ];
   constructor(
     private fb: UntypedFormBuilder,
-    private citizenService: CitizenService
+    private authService: AuthService
   ) {}
   ngOnInit(): void {
     this.createUserForm = this.fb.group({
@@ -57,11 +58,9 @@ export class RegisterComponent implements OnInit {
   async saveUser() {
     this.fillForm();
     let id;
-    if (this.type == 'citizen') {
-      id = this.citizenService.createCitizen(this.citizen).then((result) => {
-        console.log('Creating user');
-      });
-    }
+    id = this.authService.createUser(this.citizen, this.type).then((result) => {
+      console.log('Creating user');
+    });
     return id;
   }
 

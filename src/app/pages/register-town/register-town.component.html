@@ -1,0 +1,75 @@
+<div style="flex: 1; width: 100vw; height: 100vh">
+  <form class="container column" [formGroup]="createUserForm">
+    <div style="display: flex; flex-direction: column">
+      <span> Nome </span>
+      <mat-form-field class="full-width">
+        <mat-label> Nome </mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Nome"
+          formControlName="displayName"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <div class="item full-width">
+        <span> Email </span>
+        <mat-form-field>
+          <mat-label> Email </mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Nome"
+            formControlName="email"
+          />
+        </mat-form-field>
+      </div>
+      <div class="full-width item">
+        <span> Senha </span>
+        <mat-form-field class="full-width">
+          <mat-label> Senha </mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Nome"
+            formControlName="password"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="full-width item">
+        <span> CEP </span>
+        <mat-form-field>
+          <mat-label> CEP </mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Nome"
+            formControlName="cityZipCode"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <span> Tipo de usuário </span>
+      <mat-form-field>
+        <mat-select (selectionChange)="onTypeChange($event)">
+          <mat-option
+            *ngFor="let option of townFormTypes"
+            [value]="option.value"
+            [id]="option.value"
+          >
+            {{ option.displayName }}
+          </mat-option>
+        </mat-select></mat-form-field
+      >
+    </div>
+    <div class="actions">
+      <button mat-button>Cancelar</button>
+      <button mat-raised-button (click)="saveUser()">Salvar</button>
+    </div>
+  </form>
+</div>
