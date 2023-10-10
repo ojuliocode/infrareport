@@ -3,8 +3,14 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateOccurrenceDialogComponent } from '../create-occurrence-dialog/create-occurrence-dialog.component';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { OccurrenceService } from 'src/app/core/services/occurrence.service';
+import { Subject, takeUntil } from 'rxjs';
+import { Occurrence } from 'src/app/shared/models/occurrence.model';
 
 // TODO: se usuario for cidadao, zoom e latitude inicial vao ser X. Caso cidade, vai ser Y
+// TODO: se a ocorrencia for varias vezes a mesma, ver como da pra agrupar na hora de resolver
+// TODO: preciso limitar quais ocorrencias vao ser mostradas para o usuário ou pra cidade
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -14,9 +20,23 @@ export class MapComponent implements OnInit {
   title = 'infrareport';
   mapLoaded: boolean = false;
   positionToRender = { lat: 0, lng: 0 };
-
-  constructor(private dialog: MatDialog) {}
+  occurrences: Occurrence[] = [];
+  private destroy$ = new Subject<void>();
+  public map: any;
+  constructor(
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private occurrenceService: OccurrenceService
+  ) {}
   ngOnInit(): void {
+    this.occurrenceService.occurrences$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((occurrence) => {
+        occurrence.forEach((oc) => {
+          this.occurrences.push(oc);
+        });
+        if (this.mapLoaded) this.loadMarkers();
+      });
     let loader = new Loader({
       apiKey: GOOGLE_MAPS_API_KEY,
     });
@@ -39,7 +59,7 @@ export class MapComponent implements OnInit {
         loader
           .load()
           .then(() => {
-            const map = new google.maps.Map(
+            this.map = new google.maps.Map(
               document.getElementById('map') as HTMLElement,
               {
                 center: {
@@ -50,7 +70,7 @@ export class MapComponent implements OnInit {
               }
             );
 
-            map.addListener('click', (mapsMouseEvent: any) => {
+            this.map.addListener('click', (mapsMouseEvent: any) => {
               const location = mapsMouseEvent.latLng.toJSON();
 
               this.dialog.open(CreateOccurrenceDialogComponent, {
@@ -60,12 +80,38 @@ export class MapComponent implements OnInit {
                 },
               });
             });
+
+            this.occurrences.map((occurrence) => {
+              const a = new google.maps.Marker({
+                position: {
+                  lat: occurrence.location.lat,
+                  lng: occurrence.location.lng,
+                },
+                map: this.map,
+                title: 'bogos',
+              });
+              a.setMap(this.map);
+            });
           })
           .catch((err) => {
             console.log(err);
           });
         this.mapLoaded = true;
       });
+  }
+
+  loadMarkers() {
+    this.occurrences.map((occurrence) => {
+      const a = new google.maps.Marker({
+        position: {
+          lat: occurrence.location.lat,
+          lng: occurrence.location.lng,
+        },
+        map: this.map,
+        title: 'bogos',
+      });
+      a.setMap(this.map);
+    });
   }
 
   getPosition(): Promise<any> {

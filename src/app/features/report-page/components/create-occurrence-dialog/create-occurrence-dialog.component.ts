@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { first, lastValueFrom } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CitizenService } from 'src/app/core/services/citizen.service';
 import { OccurrenceService } from 'src/app/core/services/occurrence.service';
 import { TownService } from 'src/app/core/services/town.service';
@@ -38,7 +38,7 @@ export class CreateOccurrenceDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Data,
     private fb: UntypedFormBuilder,
-    private citizenService: CitizenService,
+    private authService: AuthService,
     private townService: TownService,
     private occurrenceService: OccurrenceService,
     public dialogRef: MatDialogRef<CreateOccurrenceDialogComponent>
@@ -51,8 +51,10 @@ export class CreateOccurrenceDialogComponent implements OnInit {
       createdAt: [''],
     }) as UntypedFormGroup;
 
+    const loggedUser = this.authService.loggedUser as Citizen;
+
     this.townService
-      .getTownByZipCode(this.citizenService.loggedCitizen.address.cityZipCode)
+      .getTownByZipCode(loggedUser.address.cityZipCode)
       .then((res) => {
         if (res) this.townId = res;
       });
@@ -60,6 +62,8 @@ export class CreateOccurrenceDialogComponent implements OnInit {
 
   saveOccurrence() {
     try {
+      if (!this.townId)
+        throw 'A sua cidade ainda não se cadastrou no Infrareport. ';
       this.fillForm();
       this.occurrenceService
         .createOccurence(this.occurrence, this.townId)
@@ -69,8 +73,8 @@ export class CreateOccurrenceDialogComponent implements OnInit {
         .catch(() => {
           alert('Houve um erro ao criar a ocorrência');
         });
-    } catch {
-      alert('Houve um erro ao criar a ocorrência');
+    } catch (err) {
+      alert(err ? err : 'Houve um erro ao criar a ocorrência');
     } finally {
       this.dialogRef.close();
     }

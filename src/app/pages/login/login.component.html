@@ -15,7 +15,7 @@
       </div>
       <div class="full-width item">
         <span> Senha </span>
-        <mat-form-field class="full-width">
+        <mat-form-field>
           <mat-label> Senha </mat-label>
           <input
             type="text"
@@ -44,6 +44,14 @@
     <div class="actions">
       <button mat-button>Cancelar</button>
       <button mat-raised-button (click)="login()">Salvar</button>
+    </div>
+    <div class="actions">
+      <button mat-stroked-button (click)="register('citizen')">
+        Criar conta como cidadão
+      </button>
+      <button mat-stroked-button (click)="register('town')">
+        Criar conta como cidade
+      </button>
     </div>
   </form>
 </div>

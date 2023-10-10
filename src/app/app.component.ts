@@ -4,6 +4,7 @@ import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
 import { CitizenService } from './core/services/citizen.service';
 import { first } from 'rxjs';
 import { Citizen } from './shared/models/citizen.model';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,9 @@ import { Citizen } from './shared/models/citizen.model';
 })
 export class AppComponent implements OnInit {
   title = 'infrareport';
-  constructor(private citizenService: CitizenService) {}
+  constructor(private authService: AuthService) {}
   async ngOnInit() {
-    this.citizenService.citizen$.pipe(first()).subscribe((citizen: Citizen) => {
+    this.authService.user$.pipe(first()).subscribe((citizen: Citizen) => {
       console.log('App Pipe');
     });
   }

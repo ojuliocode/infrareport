@@ -41,32 +41,6 @@
     </div>
     <div class="row">
       <div class="full-width item">
-        <span> Rua </span>
-        <mat-form-field>
-          <mat-label> Rua </mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Nome"
-            formControlName="addressLine1"
-          />
-        </mat-form-field>
-      </div>
-      <div class="full-width item">
-        <span> Bairro </span>
-        <mat-form-field class="full-width">
-          <mat-label> Bairro </mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Nome"
-            formControlName="addressLine2"
-          />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="full-width item">
         <span> CEP </span>
         <mat-form-field>
           <mat-label> CEP </mat-label>
@@ -78,36 +52,13 @@
           />
         </mat-form-field>
       </div>
-      <div class="full-width item">
-        <span> Cidade </span>
-        <mat-form-field class="full-width">
-          <mat-label> Cidade </mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Nome"
-            formControlName="city"
-          />
-        </mat-form-field>
-      </div>
-    </div>
-    <div>
-      <span> Tipo de usuário </span>
-      <mat-form-field>
-        <mat-select (selectionChange)="onTypeChange($event)">
-          <mat-option
-            *ngFor="let option of citizenFormTypes"
-            [value]="option.value"
-            [id]="option.value"
-          >
-            {{ option.displayName }}
-          </mat-option>
-        </mat-select></mat-form-field
-      >
     </div>
     <div class="actions">
       <button mat-button>Cancelar</button>
       <button mat-raised-button (click)="saveUser()">Salvar</button>
+      <button mat-stroked-button (click)="registerCitizen()">
+        Criar conta como cidadão
+      </button>
     </div>
   </form>
 </div>

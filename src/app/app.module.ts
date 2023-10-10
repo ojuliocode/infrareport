@@ -18,7 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 import { MatInputModule } from '@angular/material/input';
-import { RegisterComponent } from './pages/register/register.component';
+import { RegisterCitizenComponent } from './pages/register-citizen/register-citizen.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -32,6 +32,7 @@ import {
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterTownComponent } from './pages/register-town/register-town.component';
 
 @NgModule({
   declarations: [
@@ -42,8 +43,9 @@ import { LoginComponent } from './pages/login/login.component';
     ReportPageComponent,
     SpinnerComponent,
     CreateOccurrenceDialogComponent,
-    RegisterComponent,
+    RegisterCitizenComponent,
     LoginComponent,
+    RegisterTownComponent,
   ],
   imports: [
     BrowserModule,
