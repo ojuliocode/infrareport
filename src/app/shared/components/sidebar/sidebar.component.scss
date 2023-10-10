@@ -2,6 +2,7 @@
 
 .container {
   width: $sidebar-width;
+  height: 100vh;
 }
 
 .list {
@@ -43,9 +44,10 @@ mat-icon {
 }
 
 .extra-item {
-  position: absolute;
-  bottom: 4em;
-  width: $sidebar-width;
+}
+
+.text-white {
+  color: white;
 }
 
 @media only screen and (max-width: 600px) {
@@ -54,7 +56,6 @@ mat-icon {
     bottom: 0;
     position: absolute;
     height: $sidebar-responsible-height;
-    background-color: white;
     z-index: 2;
   }
 
@@ -65,15 +66,24 @@ mat-icon {
   .sidebar-items-container {
     display: flex;
     justify-content: space-around;
+    height: $sidebar-responsible-height;
   }
 
   .sidebar-item {
     flex-direction: column;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: $sidebar-responsible-height;
   }
 
   mat-icon {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  button {
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   header,

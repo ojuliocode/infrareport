@@ -10,4 +10,5 @@ export interface Citizen {
     cityZipCode: string;
   };
   displayName: string;
+  type: string;
 }

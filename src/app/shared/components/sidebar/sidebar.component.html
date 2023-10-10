@@ -1,4 +1,4 @@
-<nav class="container">
+<nav class="container default-background">
   <header>
     <img src="../../../../assets/logo.png" />
     <span class="text-big-bold title"> InfraReport </span>
@@ -13,12 +13,16 @@
         ><mat-icon aria-hidden="false" aria-label="Example home icon">
           {{ item.icon }}
         </mat-icon>
-        <span class="label text-standard-regular"> {{ item.label }} </span>
+        <span class="label text-standard-regular">
+          {{ item.label }}
+        </span>
       </a>
     </button>
     <button
       mat-button
       [style.height]="sideBarCustomItem.height"
+      style="margin-top: 40px"
+      (click)="logout()"
       class="extra-item"
     >
       <a class="sidebar-item"

@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ReportLayoutComponent } from './pages/report-layout/report-layout.component';
 import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
+import { RegisterCitizenComponent } from './pages/register-citizen/register-citizen.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { RegisterTownComponent } from './pages/register-town/register-town.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'map',
     pathMatch: 'full',
   },
   {
@@ -22,8 +23,13 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'register',
-    component: RegisterComponent,
+    path: 'register-citizen',
+    component: RegisterCitizenComponent,
+  },
+
+  {
+    path: 'register-town',
+    component: RegisterTownComponent,
   },
 ];
 

@@ -1,6 +1,6 @@
 @use "@angular/material" as mat;
 // Plus imports for other components in your app.
-
+@import "/src/styles/variables.scss";
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -68,4 +68,12 @@ body {
 .text-big-bold {
   font-weight: bold;
   font-size: 3em;
+}
+
+.default-background {
+  background-color: $color-primary;
+}
+
+.alt-background {
+  background-color: $color-accent;
 }

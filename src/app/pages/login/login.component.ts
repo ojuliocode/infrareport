@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CitizenService } from 'src/app/core/services/citizen.service';
 
 @Component({
@@ -25,7 +27,8 @@ export class LoginComponent implements OnInit {
   ];
   constructor(
     private fb: UntypedFormBuilder,
-    private citizenService: CitizenService
+    private authService: AuthService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -36,9 +39,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.fillForm();
-    if (this.type == 'citizen') {
-      this.citizenService.signIn(this.email, this.password);
-    }
+    this.authService.signIn(this.email, this.password, this.type);
   }
 
   /**
@@ -50,5 +51,9 @@ export class LoginComponent implements OnInit {
   }
   onTypeChange(event: any) {
     this.type = event.value;
+  }
+
+  register(type: string) {
+    this.router.navigate([`/register-${type}`]);
   }
 }

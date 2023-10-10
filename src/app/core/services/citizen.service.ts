@@ -84,7 +84,6 @@ export class CitizenService {
   async signIn(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then(async (info) => {
-        console.log('Signing In');
         this.router.navigate(['/map']);
       })
       .catch(async (err) => {
