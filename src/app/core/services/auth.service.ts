@@ -15,7 +15,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from '@angular/fire/auth';
 import { Town } from 'src/app/shared/models/town.model';
@@ -30,6 +30,7 @@ export class AuthService {
   userId: string;
   loggedUser: Town | Citizen | undefined;
   type: string;
+  public logout$ = new Subject<void>();
 
   constructor(
     private firestore: Firestore,
@@ -113,6 +114,8 @@ export class AuthService {
 
   async signOut() {
     await signOut(this.auth).then((res) => {
+      this.logout$?.next();
+      this.logout$?.complete();
       this.router.navigate(['/login']);
     });
   }

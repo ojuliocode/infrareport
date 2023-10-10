@@ -62,6 +62,8 @@ export class CreateOccurrenceDialogComponent implements OnInit {
 
   saveOccurrence() {
     try {
+      if (!this.townId)
+        throw 'A sua cidade ainda não se cadastrou no Infrareport. ';
       this.fillForm();
       this.occurrenceService
         .createOccurence(this.occurrence, this.townId)
@@ -71,8 +73,8 @@ export class CreateOccurrenceDialogComponent implements OnInit {
         .catch(() => {
           alert('Houve um erro ao criar a ocorrência');
         });
-    } catch {
-      alert('Houve um erro ao criar a ocorrência');
+    } catch (err) {
+      alert(err ? err : 'Houve um erro ao criar a ocorrência');
     } finally {
       this.dialogRef.close();
     }
