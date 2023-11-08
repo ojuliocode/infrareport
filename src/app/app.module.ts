@@ -33,6 +33,7 @@ import {
 import { AngularFireModule } from '@angular/fire/compat';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterTownComponent } from './pages/register-town/register-town.component';
+import { ShowOccurrenceDialogComponent } from './features/report-page/components/show-occurrence-dialog/show-occurrence-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { RegisterTownComponent } from './pages/register-town/register-town.compo
     RegisterCitizenComponent,
     LoginComponent,
     RegisterTownComponent,
+    ShowOccurrenceDialogComponent,
   ],
   imports: [
     BrowserModule,

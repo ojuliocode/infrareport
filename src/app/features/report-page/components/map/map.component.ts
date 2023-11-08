@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { OccurrenceService } from 'src/app/core/services/occurrence.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Occurrence } from 'src/app/shared/models/occurrence.model';
+import { ShowOccurrenceDialogComponent } from '../show-occurrence-dialog/show-occurrence-dialog.component';
 
 // TODO: se usuario for cidadao, zoom e latitude inicial vao ser X. Caso cidade, vai ser Y
 // TODO: se a ocorrencia for varias vezes a mesma, ver como da pra agrupar na hora de resolver
@@ -78,6 +79,8 @@ export class MapComponent implements OnInit {
                 data: {
                   location: location,
                 },
+                enterAnimationDuration: '200ms',
+                exitAnimationDuration: '200ms',
               });
             });
 
@@ -111,6 +114,18 @@ export class MapComponent implements OnInit {
         title: 'bogos',
       });
       a.setMap(this.map);
+      a.addListener('click', (mapsMouseEvent: any) => {
+        this.dialog.open(ShowOccurrenceDialogComponent, {
+          panelClass: 'show-occurrence-dialog',
+          data: {
+            occurrence: occurrence,
+          },
+          enterAnimationDuration: '200ms',
+          exitAnimationDuration: '200ms',
+        });
+
+        console.log(occurrence);
+      });
     });
   }
 
