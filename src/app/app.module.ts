@@ -3,7 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MapComponent } from './features/report-page/components/map/map.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
@@ -55,6 +58,7 @@ import { ShowOccurrenceDialogComponent } from './features/report-page/components
     NoopAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    BrowserAnimationsModule,
     MatDialogModule,
     FormsModule,
     MatInputModule,
