@@ -35,6 +35,8 @@ export class CreateOccurrenceDialogComponent implements OnInit {
       lng: 0,
     },
   };
+
+  img: File;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Data,
     private fb: UntypedFormBuilder,
@@ -66,11 +68,11 @@ export class CreateOccurrenceDialogComponent implements OnInit {
         throw 'A sua cidade ainda não se cadastrou no Infrareport. ';
       this.fillForm();
       this.occurrenceService
-        .createOccurence(this.occurrence, this.townId)
+        .createOccurence(this.occurrence, this.townId, this.img)
         .then(() => {
           alert('Ocorrência criada com sucesso');
         })
-        .catch(() => {
+        .catch((eer) => {
           alert('Houve um erro ao criar a ocorrência');
         });
     } catch (err) {
@@ -89,5 +91,9 @@ export class CreateOccurrenceDialogComponent implements OnInit {
       lat: this.data.location.lat,
       lng: this.data.location.lng,
     };
+  }
+
+  fileHandler(e: any) {
+    this.img = e.target.files[0];
   }
 }
