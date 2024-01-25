@@ -22,7 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { MatInputModule } from '@angular/material/input';
 import { RegisterCitizenComponent } from './pages/register-citizen/register-citizen.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
@@ -37,7 +37,11 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterTownComponent } from './pages/register-town/register-town.component';
 import { ShowOccurrenceDialogComponent } from './features/report-page/components/show-occurrence-dialog/show-occurrence-dialog.component';
-
+import {
+  StorageModule,
+  getStorage,
+  provideStorage,
+} from '@angular/fire/storage';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +73,7 @@ import { ShowOccurrenceDialogComponent } from './features/report-page/components
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
+    StorageModule,
     AngularFireAuthModule,
   ],
   providers: [
