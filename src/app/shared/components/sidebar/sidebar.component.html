@@ -1,7 +1,9 @@
-<nav class="container default-background">
+<nav class="container sidebar">
   <header>
-    <img src="../../../../assets/logo.png" />
-    <span class="text-big-bold title"> InfraReport </span>
+    <img src="../../../../assets/logo.png" width="200px" height="200px" />
+    <span class="text-big-bold title" style="color: rgb(102, 163, 232)">
+      InfraReport
+    </span>
   </header>
   <div class="sidebar-items-container list">
     <button
@@ -10,10 +12,17 @@
       [style.height]="item.height"
     >
       <a class="sidebar-item"
-        ><mat-icon aria-hidden="false" aria-label="Example home icon">
+        ><mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          style="color: rgb(102, 163, 232)"
+        >
           {{ item.icon }}
         </mat-icon>
-        <span class="label text-standard-regular">
+        <span
+          class="label text-standard-regular"
+          style="color: rgb(102, 163, 232)"
+        >
           {{ item.label }}
         </span>
       </a>
@@ -26,10 +35,17 @@
       class="extra-item"
     >
       <a class="sidebar-item"
-        ><mat-icon aria-hidden="false" aria-label="Example home icon">
+        ><mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          style="color: rgb(102, 163, 232)"
+        >
           {{ sideBarCustomItem.icon }}
         </mat-icon>
-        <span class="label text-standard-regular">
+        <span
+          class="label text-standard-regular"
+          style="color: rgb(102, 163, 232)"
+        >
           {{ sideBarCustomItem.label }}
         </span>
       </a>
