@@ -1,64 +1,84 @@
-<div style="flex: 1; width: 100vw; height: 100vh">
-  <form class="container column" [formGroup]="createUserForm">
-    <div style="display: flex; flex-direction: column">
-      <span> Nome </span>
-      <mat-form-field class="full-width">
-        <mat-label> Nome </mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="Nome"
-          formControlName="displayName"
-        />
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <div class="item full-width">
-        <span> Email </span>
-        <mat-form-field>
-          <mat-label> Email </mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Nome"
-            formControlName="email"
-          />
-        </mat-form-field>
-      </div>
-      <div class="full-width item">
-        <span> Senha </span>
+<div
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100svh;
+    background: linear-gradient(#285f92, #0d3c69);
+    flex-direction: column;
+  "
+>
+  <img
+    src="../../../../assets/logo.png"
+    width="150px"
+    height="150px"
+    style="background-color: white; border-radius: 50%"
+  />
+  <span class="text-big-bold title unselectable" style="color: white">
+    InfraReport
+  </span>
+  <div style="background-color: white; border-radius: 10px">
+    <form class="container column" [formGroup]="createUserForm">
+      <div style="display: flex; flex-direction: column">
+        <span> Nome </span>
         <mat-form-field class="full-width">
-          <mat-label> Senha </mat-label>
+          <mat-label> Nome </mat-label>
           <input
             type="text"
             matInput
             placeholder="Nome"
-            formControlName="password"
+            formControlName="displayName"
           />
         </mat-form-field>
       </div>
-    </div>
-    <div class="row">
-      <div class="full-width item">
-        <span> CEP </span>
-        <mat-form-field>
-          <mat-label> CEP </mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Nome"
-            formControlName="cityZipCode"
-          />
-        </mat-form-field>
+
+      <div class="row">
+        <div class="item full-width">
+          <span> Email </span>
+          <mat-form-field>
+            <mat-label> Email </mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Nome"
+              formControlName="email"
+            />
+          </mat-form-field>
+        </div>
+        <div class="full-width item">
+          <span> Senha </span>
+          <mat-form-field class="full-width">
+            <mat-label> Senha </mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Nome"
+              formControlName="password"
+            />
+          </mat-form-field>
+        </div>
       </div>
-    </div>
-    <div class="actions">
-      <button mat-button>Cancelar</button>
-      <button mat-raised-button (click)="saveUser()">Salvar</button>
-      <button mat-stroked-button (click)="registerCitizen()">
-        Criar conta como cidadão
-      </button>
-    </div>
-  </form>
+      <div class="row">
+        <div class="full-width item">
+          <span> CEP </span>
+          <mat-form-field>
+            <mat-label> CEP </mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Nome"
+              formControlName="cityZipCode"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="actions">
+        <button mat-button>Cancelar</button>
+        <button mat-raised-button (click)="saveUser()">Salvar</button>
+        <button mat-stroked-button (click)="registerCitizen()">
+          Criar conta como cidadão
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

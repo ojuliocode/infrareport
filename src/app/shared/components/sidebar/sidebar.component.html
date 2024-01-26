@@ -1,7 +1,9 @@
-<nav class="container default-background">
+<nav class="container sidebar">
   <header>
-    <img src="../../../../assets/logo.png" />
-    <span class="text-big-bold title"> InfraReport </span>
+    <img src="../../../../assets/logo.png" width="200px" height="200px" />
+    <span class="text-big-bold title unselectable" style="color: white">
+      InfraReport
+    </span>
   </header>
   <div class="sidebar-items-container list">
     <button
@@ -10,10 +12,14 @@
       [style.height]="item.height"
     >
       <a class="sidebar-item"
-        ><mat-icon aria-hidden="false" aria-label="Example home icon">
+        ><mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          style="color: white"
+        >
           {{ item.icon }}
         </mat-icon>
-        <span class="label text-standard-regular">
+        <span class="label text-standard-regular" style="color: white">
           {{ item.label }}
         </span>
       </a>
@@ -26,10 +32,14 @@
       class="extra-item"
     >
       <a class="sidebar-item"
-        ><mat-icon aria-hidden="false" aria-label="Example home icon">
+        ><mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          style="color: white"
+        >
           {{ sideBarCustomItem.icon }}
         </mat-icon>
-        <span class="label text-standard-regular">
+        <span class="label text-standard-regular" style="color: white">
           {{ sideBarCustomItem.label }}
         </span>
       </a>

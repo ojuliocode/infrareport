@@ -1,10 +1,15 @@
 <p class="text-big-regular" mat-dialog-title>Nova ocorrência</p>
-<form [formGroup]="createOcurrenceForm" class="container">
+<form
+  mat-dialog-content
+  [formGroup]="createOcurrenceForm"
+  class="container"
+  mat-dialog-content
+>
   <mat-dialog-content class="column">
     <mat-label> Tipo de ocorrência </mat-label>
     <mat-form-field class="full-width">
       <mat-select (selectionChange)="onOccurenceTypeChanged($event)">
-        <mat-option> none </mat-option>
+        <mat-option [value]="'none'"> Não se aplica </mat-option>
         <mat-option
           *ngFor="let option of occurrenceTypes"
           [value]="option.value"
@@ -30,11 +35,19 @@
       formControlName="image"
       accept="image/*"
       capture="environment"
+      (input)="fileHandler($event)"
     />
 
     <div class="actions">
       <button mat-button>Cancelar</button>
-      <button mat-raised-button (click)="saveOccurrence()">Salvar</button>
+      <button
+        mat-raised-button
+        (click)="saveOccurrence()"
+        mat-dialog-close
+        cdkFocusInitial
+      >
+        Salvar
+      </button>
     </div>
   </mat-dialog-content>
 </form>

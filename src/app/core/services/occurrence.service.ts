@@ -16,7 +16,12 @@ import { AuthService } from './auth.service';
 import { BehaviorSubject, takeUntil, tap } from 'rxjs';
 import { TownService } from './town.service';
 import { Citizen } from 'src/app/shared/models/citizen.model';
-
+import {
+  Storage,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
 @Injectable({
   providedIn: 'root',
 })
@@ -28,7 +33,8 @@ export class OccurrenceService {
   constructor(
     private firestore: Firestore,
     private authService: AuthService,
-    private townService: TownService
+    private townService: TownService,
+    public storage: Storage
   ) {
     this.townId = this.authService.userId;
     this.loggedUser = this.authService.loggedUser;
@@ -56,8 +62,10 @@ export class OccurrenceService {
                 ),
                 (cc) => {
                   const plural: Occurrence[] = [];
-                  cc.docChanges().forEach((occurence) => {
-                    plural.push(occurence.doc.data() as Occurrence);
+                  cc.docChanges().forEach((occurence, index) => {
+                    const occ: any = occurence.doc.data();
+                    occ.id = cc.docs[index].id;
+                    plural.push(occ as Occurrence);
                   });
                   this.occurrences$.next(plural);
                 }
@@ -78,8 +86,10 @@ export class OccurrenceService {
           collection(this.firestore, `town_list/${this.townId}/occurrences`),
           (cc) => {
             const plural: Occurrence[] = [];
-            cc.docChanges().forEach((occurence) => {
-              plural.push(occurence.doc.data() as Occurrence);
+            cc.docChanges().forEach((occurence, index) => {
+              const occ: any = occurence.doc.data();
+              occ.id = cc.docs[index].id;
+              plural.push(occ as Occurrence);
             });
             this.occurrences$.next(plural);
           }
@@ -95,13 +105,30 @@ export class OccurrenceService {
    */
   async createOccurence(
     occurrence: Occurrence,
-    townId: string
+    townId: string,
+    img?: File
   ): Promise<DocumentData> {
     const createdOccurence = await addDoc(
       collection(this.firestore, `town_list/${townId}/occurrences`),
       occurrence
     );
 
+    if (img) this.saveImg(img, createdOccurence.id);
+
     return createdOccurence;
+  }
+
+  saveImg(img: any, id: any) {
+    const storageRef = ref(this.storage, id);
+    const uploadTask = uploadBytesResumable(storageRef, img);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = snapshot.bytesTransferred / snapshot.totalBytes;
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {});
+      }
+    );
   }
 }

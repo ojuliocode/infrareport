@@ -1,57 +1,77 @@
-<div style="flex: 1; width: 100vw; height: 100vh">
-  <form class="container column" [formGroup]="loginForm">
-    <div class="row">
-      <div class="item full-width">
-        <span> Email </span>
-        <mat-form-field>
-          <mat-label> Email </mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Nome"
-            formControlName="email"
-          />
-        </mat-form-field>
+<div
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100svh;
+    background: linear-gradient(#285f92, #0d3c69);
+    flex-direction: column;
+  "
+>
+  <img
+    src="../../../../assets/logo.png"
+    width="150px"
+    height="150px"
+    style="background-color: white; border-radius: 50%"
+  />
+  <span class="text-big-bold title unselectable" style="color: white">
+    InfraReport
+  </span>
+  <div style="background-color: white; padding: 20px; border-radius: 10px">
+    <form class="container column" [formGroup]="loginForm">
+      <div class="row">
+        <div class="item full-width">
+          <span> Email </span>
+          <mat-form-field>
+            <mat-label> Email </mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Nome"
+              formControlName="email"
+            />
+          </mat-form-field>
+        </div>
+        <div class="full-width item">
+          <span> Senha </span>
+          <mat-form-field>
+            <mat-label> Senha </mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Nome"
+              formControlName="password"
+            />
+          </mat-form-field>
+        </div>
       </div>
-      <div class="full-width item">
-        <span> Senha </span>
-        <mat-form-field>
-          <mat-label> Senha </mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Nome"
-            formControlName="password"
-          />
-        </mat-form-field>
-      </div>
-    </div>
 
-    <div>
-      <span> Tipo de usuário </span>
-      <mat-form-field>
-        <mat-select (selectionChange)="onTypeChange($event)">
-          <mat-option
-            *ngFor="let option of citizenFormTypes"
-            [value]="option.value"
-            [id]="option.value"
-          >
-            {{ option.displayName }}
-          </mat-option>
-        </mat-select></mat-form-field
-      >
-    </div>
-    <div class="actions">
-      <button mat-button>Cancelar</button>
-      <button mat-raised-button (click)="login()">Salvar</button>
-    </div>
-    <div class="actions">
-      <button mat-stroked-button (click)="register('citizen')">
-        Criar conta como cidadão
-      </button>
-      <button mat-stroked-button (click)="register('town')">
-        Criar conta como cidade
-      </button>
-    </div>
-  </form>
+      <div>
+        <span> Tipo de usuário </span>
+        <mat-form-field>
+          <mat-select (selectionChange)="onTypeChange($event)">
+            <mat-option
+              *ngFor="let option of citizenFormTypes"
+              [value]="option.value"
+              [id]="option.value"
+            >
+              {{ option.displayName }}
+            </mat-option>
+          </mat-select></mat-form-field
+        >
+      </div>
+      <div class="actions">
+        <button mat-button>Cancelar</button>
+        <button mat-raised-button (click)="login()">Salvar</button>
+      </div>
+      <div class="actions">
+        <button mat-stroked-button (click)="register('citizen')">
+          Criar conta como cidadão
+        </button>
+        <button mat-stroked-button (click)="register('town')">
+          Criar conta como cidade
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

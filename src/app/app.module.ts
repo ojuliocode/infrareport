@@ -3,7 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MapComponent } from './features/report-page/components/map/map.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
@@ -19,7 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { MatInputModule } from '@angular/material/input';
 import { RegisterCitizenComponent } from './pages/register-citizen/register-citizen.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
@@ -33,7 +36,12 @@ import {
 import { AngularFireModule } from '@angular/fire/compat';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterTownComponent } from './pages/register-town/register-town.component';
-
+import { ShowOccurrenceDialogComponent } from './features/report-page/components/show-occurrence-dialog/show-occurrence-dialog.component';
+import {
+  StorageModule,
+  getStorage,
+  provideStorage,
+} from '@angular/fire/storage';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +54,7 @@ import { RegisterTownComponent } from './pages/register-town/register-town.compo
     RegisterCitizenComponent,
     LoginComponent,
     RegisterTownComponent,
+    ShowOccurrenceDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +62,7 @@ import { RegisterTownComponent } from './pages/register-town/register-town.compo
     NoopAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    BrowserAnimationsModule,
     MatDialogModule,
     FormsModule,
     MatInputModule,
@@ -63,6 +73,7 @@ import { RegisterTownComponent } from './pages/register-town/register-town.compo
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
+    StorageModule,
     AngularFireAuthModule,
   ],
   providers: [
