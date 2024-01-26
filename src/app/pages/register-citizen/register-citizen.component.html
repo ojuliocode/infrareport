@@ -17,7 +17,7 @@
   <span class="text-big-bold title unselectable" style="color: white">
     InfraReport
   </span>
-  <div style="background-color: white; border-radius: 10px">
+  <div style="background-color: white; border-radius: 10px; padding: 20px">
     <form class="container column" [formGroup]="createUserForm">
       <div style="display: flex; flex-direction: column">
         <span> Nome </span>
@@ -110,12 +110,17 @@
           </mat-form-field>
         </div>
       </div>
+
+      <div class="actions-1">
+        <button mat-raised-button (click)="saveUser()" color="primary">
+          Criar conta
+        </button>
+      </div>
       <div class="actions">
-        <button mat-button>Cancelar</button>
-        <button mat-raised-button (click)="saveUser()">Salvar</button>
         <button mat-stroked-button (click)="registerTown()">
           Criar conta como cidade
         </button>
+        <button mat-stroked-button (click)="login()">Entrar</button>
       </div>
     </form>
   </div>
