@@ -47,7 +47,7 @@ export class AuthService {
           });
 
           const obs = getDoc(
-            doc(this.firestore, `${this.type}_list/${this.userId}`)
+            doc(this.firestore, `${this.loggedUser?.type}_list/${this.userId}`)
           );
 
           return obs;
@@ -98,8 +98,7 @@ export class AuthService {
    * @param email {string} User email
    * @param password {string} User passwrod
    */
-  async signIn(email: string, password: string, type: string) {
-    this.type = type;
+  async signIn(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then(async (info) => {
         this.router.navigate(['/map']);

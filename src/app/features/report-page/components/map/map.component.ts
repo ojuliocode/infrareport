@@ -36,6 +36,12 @@ export class MapComponent implements OnInit, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((occurrence) => {
         occurrence.forEach((oc) => {
+          //const hasObjWithId = (arr: any, id: any) => {
+          //  return arr.some((obj: any) => obj.id === id);
+          //};
+          //
+          //if (!hasObjWithId(this.occurrences, oc.id)) {
+          //}
           this.occurrences.push(oc);
         });
         if (this.mapLoaded) this.loadMarkers();

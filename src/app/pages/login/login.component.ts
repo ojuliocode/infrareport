@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.fillForm();
-    this.authService.signIn(this.email, this.password, this.type);
+    this.authService.signIn(this.email, this.password);
   }
 
   /**
@@ -48,9 +48,6 @@ export class LoginComponent implements OnInit {
   private fillForm() {
     this.email = this.loginForm.get('email')?.value;
     this.password = this.loginForm.get('password')?.value;
-  }
-  onTypeChange(event: any) {
-    this.type = event.value;
   }
 
   register(type: string) {
