@@ -123,8 +123,6 @@ export class MapComponent implements OnInit {
           enterAnimationDuration: '200ms',
           exitAnimationDuration: '200ms',
         });
-
-        console.log(occurrence);
       });
     });
   }
