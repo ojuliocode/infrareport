@@ -55,7 +55,7 @@ export class SidebarComponent implements OnInit {
       },
     ];
     this.sidebarItems =
-      this.authService.type == 'citizen'
+      this.authService.loggedUser?.type == 'citizen'
         ? this.sidebarCitizenItems
         : this.sidebarTownItems;
   }

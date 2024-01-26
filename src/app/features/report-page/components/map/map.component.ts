@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ import { ShowOccurrenceDialogComponent } from '../show-occurrence-dialog/show-oc
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
   title = 'infrareport';
   mapLoaded: boolean = false;
   positionToRender = { lat: 0, lng: 0 };
@@ -27,21 +27,72 @@ export class MapComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
-    private occurrenceService: OccurrenceService
+    private occurrenceService: OccurrenceService,
+    private elementRef: ElementRef
   ) {}
-  ngOnInit(): void {
+
+  ngAfterViewInit(): void {
     this.occurrenceService.occurrences$
       .pipe(takeUntil(this.destroy$))
       .subscribe((occurrence) => {
         occurrence.forEach((oc) => {
+          //const hasObjWithId = (arr: any, id: any) => {
+          //  return arr.some((obj: any) => obj.id === id);
+          //};
+          //
+          //if (!hasObjWithId(this.occurrences, oc.id)) {
+          //}
           this.occurrences.push(oc);
         });
         if (this.mapLoaded) this.loadMarkers();
       });
+
+    this.loadMap(this.elementRef.nativeElement);
+  }
+  ngOnInit(): void {}
+
+  loadMarkers() {
+    this.occurrences.map((occurrence) => {
+      const a = new google.maps.Marker({
+        position: {
+          lat: occurrence.location.lat,
+          lng: occurrence.location.lng,
+        },
+        map: this.map,
+        title: 'bogos',
+      });
+
+      a.setMap(this.map);
+      a.addListener('click', (mapsMouseEvent: any) => {
+        this.dialog.open(ShowOccurrenceDialogComponent, {
+          panelClass: 'show-occurrence-dialog',
+          data: {
+            occurrence: occurrence,
+          },
+          enterAnimationDuration: '200ms',
+          exitAnimationDuration: '200ms',
+        });
+      });
+    });
+  }
+
+  getPosition(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (resp) => {
+          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
+
+  loadMap(element: HTMLElement) {
     let loader = new Loader({
       apiKey: GOOGLE_MAPS_API_KEY,
     });
-
     this.getPosition()
       .then((pos) => {
         this.positionToRender = {
@@ -61,7 +112,7 @@ export class MapComponent implements OnInit {
           .load()
           .then(() => {
             this.map = new google.maps.Map(
-              document.getElementById('map') as HTMLElement,
+              element.querySelector('#map') as HTMLElement,
               {
                 center: {
                   lat: this.positionToRender.lat,
@@ -101,42 +152,5 @@ export class MapComponent implements OnInit {
           });
         this.mapLoaded = true;
       });
-  }
-
-  loadMarkers() {
-    this.occurrences.map((occurrence) => {
-      const a = new google.maps.Marker({
-        position: {
-          lat: occurrence.location.lat,
-          lng: occurrence.location.lng,
-        },
-        map: this.map,
-        title: 'bogos',
-      });
-      a.setMap(this.map);
-      a.addListener('click', (mapsMouseEvent: any) => {
-        this.dialog.open(ShowOccurrenceDialogComponent, {
-          panelClass: 'show-occurrence-dialog',
-          data: {
-            occurrence: occurrence,
-          },
-          enterAnimationDuration: '200ms',
-          exitAnimationDuration: '200ms',
-        });
-      });
-    });
-  }
-
-  getPosition(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        (resp) => {
-          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
   }
 }

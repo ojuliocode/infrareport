@@ -64,7 +64,7 @@ export class OccurrenceService {
                   const plural: Occurrence[] = [];
                   cc.docChanges().forEach((occurence, index) => {
                     const occ: any = occurence.doc.data();
-                    occ.id = cc.docs[index].id;
+                    occ.id = occurence.doc.id;
                     plural.push(occ as Occurrence);
                   });
                   this.occurrences$.next(plural);
@@ -88,7 +88,7 @@ export class OccurrenceService {
             const plural: Occurrence[] = [];
             cc.docChanges().forEach((occurence, index) => {
               const occ: any = occurence.doc.data();
-              occ.id = cc.docs[index].id;
+              occ.id = occurence.doc.id;
               plural.push(occ as Occurrence);
             });
             this.occurrences$.next(plural);

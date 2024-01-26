@@ -71,4 +71,7 @@ export class RegisterTownComponent implements OnInit {
   registerCitizen() {
     this.router.navigate(['/register-citizen']);
   }
+  login() {
+    this.router.navigate(['/login']);
+  }
 }
