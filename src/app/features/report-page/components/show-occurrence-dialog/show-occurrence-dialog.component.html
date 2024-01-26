@@ -1,10 +1,5 @@
 <p class="text-big-regular" mat-dialog-title>Ocorrência</p>
-<form
-  mat-dialog-content
-  [formGroup]="createOcurrenceForm"
-  class="container"
-  mat-dialog-content
->
+<form mat-dialog-content class="container" mat-dialog-content>
   <mat-dialog-content class="column">
     <mat-label> Tipo de ocorrência </mat-label>
     <mat-form-field class="full-width">
@@ -24,7 +19,6 @@
         type="text"
         matInput
         placeholder="Comentário"
-        formControlName="comment"
         [value]="occurrence.comment"
         [disabled]="true"
       />
