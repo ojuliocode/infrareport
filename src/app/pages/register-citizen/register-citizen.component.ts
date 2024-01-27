@@ -59,11 +59,13 @@ export class RegisterCitizenComponent implements OnInit {
 
   async saveUser() {
     this.fillForm();
-    let id;
-    id = this.authService.createUser(this.citizen, this.type).then((result) => {
-      this.router.navigate(['/map']);
-    });
-    return id;
+    let user;
+    try {
+      user = await this.authService.createUser(this.citizen, this.type);
+      this.router.navigate(['/login']);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   fillForm() {
