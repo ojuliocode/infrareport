@@ -119,6 +119,8 @@ export class MapComponent implements OnInit, AfterViewInit {
                   lng: this.positionToRender.lng,
                 },
                 zoom: 15,
+                disableDefaultUI: true,
+                clickableIcons: false,
               }
             );
 
