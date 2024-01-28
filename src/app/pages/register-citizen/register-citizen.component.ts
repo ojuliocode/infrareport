@@ -7,6 +7,10 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Citizen } from 'src/app/shared/models/citizen.model';
+import {
+  FIREBASE_ERR_KEYS,
+  FIREBASE_ERR_MESSAGES,
+} from 'src/app/shared/utils/firebase-error.utils';
 
 @Component({
   selector: 'app-register-citizen',
@@ -59,11 +63,17 @@ export class RegisterCitizenComponent implements OnInit {
 
   async saveUser() {
     this.fillForm();
-    let id;
-    id = this.authService.createUser(this.citizen, this.type).then((result) => {
-      this.router.navigate(['/map']);
-    });
-    return id;
+    let user;
+    try {
+      user = await this.authService.createUser(this.citizen, this.type);
+      this.router.navigate(['/login']);
+    } catch (err: any) {
+      const errorCode = err.code as string;
+      const index = FIREBASE_ERR_KEYS.indexOf(errorCode);
+      index != -1
+        ? alert(FIREBASE_ERR_MESSAGES[index])
+        : alert('Ocorreu um erro');
+    }
   }
 
   fillForm() {

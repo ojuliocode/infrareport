@@ -38,11 +38,11 @@ export class AuthService {
     private router: Router
   ) {
     this.user$ = authState(this.auth as any).pipe(
-      switchMap((user) => {
+      switchMap(async (user) => {
         if (user) {
           this.firebaseUser = user;
           this.userId = user.uid;
-          this.getUserById(this.userId).then((fetchedUser) => {
+          await this.getUserById(this.userId).then((fetchedUser) => {
             this.loggedUser = fetchedUser as any;
           });
 
@@ -77,20 +77,21 @@ export class AuthService {
    * @param user {User} User to be created
    * @returns {Promise}
    */
-  async createUser(user: Citizen | Town, type: string): Promise<void> {
-    createUserWithEmailAndPassword(this.auth, user.email, user.password)
-      .then(async (e) => {
-        const createdUser = await setDoc(
-          doc(this.firestore, `${type}_list/${e.user.uid}`),
-          user
-        );
-        return createdUser;
-      })
-      .catch(async (e) => {
-        alert(
-          'Não foi possível criar o usuário. Por favor, cheque se todos os campos estão preenchidos corretamente'
-        );
-      });
+  async createUser(user: Citizen | Town, type: string): Promise<any> {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        this.auth,
+        user.email,
+        user.password
+      );
+      await setDoc(
+        doc(this.firestore, `${type}_list/${userCredential.user.uid}`),
+        user
+      );
+      return userCredential.user;
+    } catch (err) {
+      throw err;
+    }
   }
 
   /**
@@ -115,6 +116,7 @@ export class AuthService {
     await signOut(this.auth).then((res) => {
       this.logout$?.next();
       this.logout$?.complete();
+      this.loggedUser = undefined;
       this.router.navigate(['/login']);
     });
   }

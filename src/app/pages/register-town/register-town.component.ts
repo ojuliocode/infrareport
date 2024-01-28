@@ -5,8 +5,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FirebaseError } from 'firebase/app';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Town } from 'src/app/shared/models/town.model';
+import {
+  FIREBASE_ERR_KEYS,
+  FIREBASE_ERR_MESSAGES,
+} from 'src/app/shared/utils/firebase-error.utils';
 
 @Component({
   selector: 'app-register-town',
@@ -50,11 +55,17 @@ export class RegisterTownComponent implements OnInit {
 
   async saveUser() {
     this.fillForm();
-    let id;
-    id = this.authService.createUser(this.town, this.type).then((result) => {
-      this.router.navigate(['/map']);
-    });
-    return id;
+    let user;
+    try {
+      user = await this.authService.createUser(this.town, this.type);
+      this.router.navigate(['/login']);
+    } catch (err: any) {
+      const errorCode = err.code as string;
+      const index = FIREBASE_ERR_KEYS.indexOf(errorCode);
+      index != -1
+        ? alert(FIREBASE_ERR_MESSAGES[index])
+        : alert('Ocorreu um erro');
+    }
   }
 
   fillForm() {

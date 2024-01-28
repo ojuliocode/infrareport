@@ -7,8 +7,6 @@ import { OccurrenceService } from 'src/app/core/services/occurrence.service';
   styleUrls: ['./report-layout.component.scss'],
 })
 export class ReportLayoutComponent implements OnInit {
-  constructor(private occurrenceService: OccurrenceService) {
-    this.occurrenceService.init();
-  }
+  constructor(private occurrenceService: OccurrenceService) {}
   ngOnInit(): void {}
 }
