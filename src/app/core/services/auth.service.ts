@@ -38,11 +38,11 @@ export class AuthService {
     private router: Router
   ) {
     this.user$ = authState(this.auth as any).pipe(
-      switchMap((user) => {
+      switchMap(async (user) => {
         if (user) {
           this.firebaseUser = user;
           this.userId = user.uid;
-          this.getUserById(this.userId).then((fetchedUser) => {
+          await this.getUserById(this.userId).then((fetchedUser) => {
             this.loggedUser = fetchedUser as any;
           });
 
@@ -116,6 +116,7 @@ export class AuthService {
     await signOut(this.auth).then((res) => {
       this.logout$?.next();
       this.logout$?.complete();
+      this.loggedUser = undefined;
       this.router.navigate(['/login']);
     });
   }

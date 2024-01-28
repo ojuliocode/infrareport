@@ -60,7 +60,7 @@ export class SidebarComponent implements OnInit {
         : this.sidebarTownItems;
   }
 
-  logout() {
-    this.authService.signOut();
+  async logout() {
+    await this.authService.signOut();
   }
 }

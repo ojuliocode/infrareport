@@ -27,9 +27,8 @@ import {
 })
 export class OccurrenceService {
   private townId: string | undefined = '';
-  private loggedUser;
   public occurrences$ = new BehaviorSubject<Occurrence[]>([]);
-
+  public unsub: any;
   constructor(
     private firestore: Firestore,
     private authService: AuthService,
@@ -37,14 +36,15 @@ export class OccurrenceService {
     public storage: Storage
   ) {
     this.townId = this.authService.userId;
-    this.loggedUser = this.authService.loggedUser;
   }
 
   async init(): Promise<void> {
     try {
-      if (this.loggedUser?.type == 'citizen') {
+      if (this.authService.loggedUser?.type == 'citizen') {
         this.townService
-          .getTownByZipCode((this.loggedUser as Citizen).address?.cityZipCode)
+          .getTownByZipCode(
+            (this.authService.loggedUser as Citizen).address?.cityZipCode
+          )
           .then((result) => {
             if (result) {
               this.townId = result;
@@ -55,7 +55,7 @@ export class OccurrenceService {
 
               const appQuery = query(appRef);
 
-              onSnapshot(
+              this.unsub = onSnapshot(
                 collection(
                   this.firestore,
                   `town_list/${this.townId}/occurrences`
@@ -67,6 +67,7 @@ export class OccurrenceService {
                     occ.id = occurence.doc.id;
                     plural.push(occ as Occurrence);
                   });
+                  if (cc.docs.length <= 0) this.occurrences$.next([]);
                   this.occurrences$.next(plural);
                 }
               );
@@ -75,6 +76,7 @@ export class OccurrenceService {
             }
           });
       } else {
+        this.townId = this.authService.userId;
         const appRef = collection(
           this.firestore,
           `town_list/${this.townId}/occurrences`
@@ -82,7 +84,7 @@ export class OccurrenceService {
 
         const appQuery = query(appRef);
 
-        onSnapshot(
+        this.unsub = onSnapshot(
           collection(this.firestore, `town_list/${this.townId}/occurrences`),
           (cc) => {
             const plural: Occurrence[] = [];
@@ -92,6 +94,7 @@ export class OccurrenceService {
               plural.push(occ as Occurrence);
             });
             this.occurrences$.next(plural);
+            if (cc.docs.length <= 0) this.occurrences$.next([]);
           }
         );
       }

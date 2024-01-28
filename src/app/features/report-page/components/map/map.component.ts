@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,12 +23,14 @@ import { ShowOccurrenceDialogComponent } from '../show-occurrence-dialog/show-oc
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'infrareport';
   mapLoaded: boolean = false;
   positionToRender = { lat: 0, lng: 0 };
   occurrences: Occurrence[] = [];
+  markers: google.maps.Marker[] = [];
   private destroy$ = new Subject<void>();
+  private firstSubscribe = true;
   public map: any;
   constructor(
     private dialog: MatDialog,
@@ -31,20 +39,20 @@ export class MapComponent implements OnInit, AfterViewInit {
     private elementRef: ElementRef
   ) {}
 
-  ngAfterViewInit(): void {
+  ngOnDestroy(): void {}
+  async ngAfterViewInit() {
+    await this.occurrenceService.init();
     this.occurrenceService.occurrences$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$), takeUntil(this.authService.logout$))
       .subscribe((occurrence) => {
-        occurrence.forEach((oc) => {
-          //const hasObjWithId = (arr: any, id: any) => {
-          //  return arr.some((obj: any) => obj.id === id);
-          //};
-          //
-          //if (!hasObjWithId(this.occurrences, oc.id)) {
-          //}
-          this.occurrences.push(oc);
-        });
-        if (this.mapLoaded) this.loadMarkers();
+        if (!this.firstSubscribe) {
+          occurrence.forEach((oc) => {
+            if (occurrence.length <= 0) this.occurrences = [];
+            else this.occurrences.push(oc);
+          });
+          if (this.mapLoaded) this.loadMarkers();
+        }
+        this.firstSubscribe = false;
       });
 
     this.loadMap(this.elementRef.nativeElement);
@@ -147,6 +155,16 @@ export class MapComponent implements OnInit, AfterViewInit {
                 title: 'bogos',
               });
               a.setMap(this.map);
+              a.addListener('click', (mapsMouseEvent: any) => {
+                this.dialog.open(ShowOccurrenceDialogComponent, {
+                  panelClass: 'show-occurrence-dialog',
+                  data: {
+                    occurrence: occurrence,
+                  },
+                  enterAnimationDuration: '200ms',
+                  exitAnimationDuration: '200ms',
+                });
+              });
             });
           })
           .catch((err) => {
