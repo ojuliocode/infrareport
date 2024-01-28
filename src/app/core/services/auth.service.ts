@@ -51,7 +51,10 @@ export class AuthService {
           );
 
           return obs;
-        } else this.loggedUser = undefined;
+        } else {
+          this.loggedUser = undefined;
+          this.router.navigate(['/login']);
+        }
         return of(null);
       })
     );
