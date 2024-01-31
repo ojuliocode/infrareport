@@ -42,6 +42,7 @@ import {
   getStorage,
   provideStorage,
 } from '@angular/fire/storage';
+import { OnlyNumbersDirective } from './shared/only-numbers.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,7 @@ import {
     LoginComponent,
     RegisterTownComponent,
     ShowOccurrenceDialogComponent,
+    OnlyNumbersDirective,
   ],
   imports: [
     BrowserModule,

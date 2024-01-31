@@ -2,6 +2,15 @@
   width: 100%;
 }
 
+.major-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100svh;
+  background: linear-gradient(#285f92, #0d3c69);
+  flex-direction: column;
+}
+
 .row {
   display: flex;
   flex-direction: row;
@@ -30,5 +39,8 @@
 @media only screen and (max-width: 600px) {
   .row {
     flex-direction: column;
+  }
+  .major-container {
+    height: auto;
   }
 }
