@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CitizenService } from 'src/app/core/services/citizen.service';
 import { OccurrenceService } from 'src/app/core/services/occurrence.service';
+import { SpinnerService } from 'src/app/core/services/spinner.service';
 import { TownService } from 'src/app/core/services/town.service';
 import { OCCURRENCE_TYPES } from 'src/app/shared/constants/occurrence.constants';
 import { Citizen } from 'src/app/shared/models/citizen.model';
@@ -43,7 +44,8 @@ export class CreateOccurrenceDialogComponent implements OnInit {
     private authService: AuthService,
     private townService: TownService,
     private occurrenceService: OccurrenceService,
-    public dialogRef: MatDialogRef<CreateOccurrenceDialogComponent>
+    public dialogRef: MatDialogRef<CreateOccurrenceDialogComponent>,
+    private spinner: SpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -67,9 +69,12 @@ export class CreateOccurrenceDialogComponent implements OnInit {
       if (!this.townId)
         throw 'A sua cidade ainda não se cadastrou no Infrareport. ';
       this.fillForm();
+
+      this.spinner.show();
       this.occurrenceService
         .createOccurence(this.occurrence, this.townId, this.img)
         .then(() => {
+          this.spinner.hide();
           alert('Ocorrência criada com sucesso');
         })
         .catch((eer) => {

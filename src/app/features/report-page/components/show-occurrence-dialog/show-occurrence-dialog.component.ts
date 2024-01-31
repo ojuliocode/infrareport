@@ -5,6 +5,7 @@ import { Data } from '@angular/router';
 import { OCCURRENCE_TYPES } from 'src/app/shared/constants/occurrence.constants';
 import { Occurrence } from 'src/app/shared/models/occurrence.model';
 import { Storage, getDownloadURL, ref } from '@angular/fire/storage';
+import { SpinnerService } from 'src/app/core/services/spinner.service';
 
 @Component({
   selector: 'app-show-occurrence-dialog',
@@ -19,17 +20,23 @@ export class ShowOccurrenceDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Data,
     public dialogRef: MatDialogRef<ShowOccurrenceDialogComponent>,
-    private storage: Storage
+    private storage: Storage,
+    private spinner: SpinnerService
   ) {}
-  ngOnInit(): void {
-    this.fetchImg();
+  async ngOnInit() {
+    this.spinner.show();
+    await this.fetchImg()
+      .then(() => {
+        this.spinner.hide();
+      })
+      .catch(() => {
+        this.spinner.hide();
+      });
   }
 
-  fetchImg() {
-    getDownloadURL(ref(this.storage, this.occurrence.id))
-      .then((url) => {
-        // `url` is the download URL for 'images/stars.jpg'
-
+  async fetchImg() {
+    await getDownloadURL(ref(this.storage, this.occurrence.id))
+      .then(async (url) => {
         // This can be downloaded directly:
         const xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
