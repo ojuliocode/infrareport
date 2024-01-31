@@ -8,8 +8,9 @@
   <div class="sidebar-items-container list">
     <button
       mat-button
-      *ngFor="let item of sidebarItems"
+      *ngFor="let item of sidebarItems; index as i"
       [style.height]="item.height"
+      (click)="sideBarActions[i]()"
     >
       <a class="sidebar-item"
         ><mat-icon
@@ -30,6 +31,7 @@
       style="margin-top: 40px"
       (click)="logout()"
       class="extra-item"
+      *ngIf="sideBarCustomItem"
     >
       <a class="sidebar-item"
         ><mat-icon

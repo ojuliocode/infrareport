@@ -96,4 +96,8 @@ export class CreateOccurrenceDialogComponent implements OnInit {
   fileHandler(e: any) {
     this.img = e.target.files[0];
   }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

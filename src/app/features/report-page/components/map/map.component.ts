@@ -2,8 +2,11 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_API_KEY } from 'src/environments/environment.prod';
@@ -23,7 +26,9 @@ import { ShowOccurrenceDialogComponent } from '../show-occurrence-dialog/show-oc
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapComponent
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
   title = 'infrareport';
   mapLoaded: boolean = false;
   positionToRender = { lat: 0, lng: 0 };
@@ -32,13 +37,19 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private firstSubscribe = true;
   public map: any;
+  @Input() data: any;
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
     private occurrenceService: OccurrenceService,
     private elementRef: ElementRef
   ) {}
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']?.currentValue) {
+      (this.map as google.maps.Map).panTo(changes['data']?.currentValue);
+      setTimeout(() => (this.map as google.maps.Map).setZoom(16), 500);
+    }
+  }
   ngOnDestroy(): void {}
   async ngAfterViewInit() {
     await this.occurrenceService.init();
