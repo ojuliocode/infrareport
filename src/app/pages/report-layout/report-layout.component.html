@@ -1,5 +1,5 @@
 <div class="container">
   <!-- Router outlet dos reportes (com todas as telas + sidebar)-->
-  <app-sidebar> </app-sidebar>
-  <app-map> </app-map>
+  <app-sidebar (panMap)="parentData = $event"> </app-sidebar>
+  <app-map [data]="parentData"> </app-map>
 </div>
