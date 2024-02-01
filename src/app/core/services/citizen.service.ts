@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Citizen } from 'src/app/shared/models/citizen.model';
+import { NotifierService } from './notifier.service';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,8 @@ export class CitizenService {
   constructor(
     private firestore: Firestore,
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private notifier: NotifierService
   ) {
     this.citizen$ = authState(this.auth as any).pipe(
       switchMap((citizen) => {
@@ -70,8 +72,10 @@ export class CitizenService {
         return createdCitizen;
       })
       .catch(async (e) => {
-        alert(
-          'Não foi possível criar o usuário. Por favor, cheque se todos os campos estão preenchidos corretamente'
+        this.notifier.notify(
+          'Aviso',
+          'salmon',
+          'Não foi possível criar o usuário'
         );
       });
   }
@@ -88,9 +92,7 @@ export class CitizenService {
       })
       .catch(async (err) => {
         console.log(err);
-        alert(
-          'Login não foi bem-sucedido. Por favor, cheque seu email e senha'
-        );
+        this.notifier.notify('Aviso', 'salmon', 'Login não bem sucedido');
       });
   }
 }

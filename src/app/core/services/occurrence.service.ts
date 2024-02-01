@@ -116,21 +116,21 @@ export class OccurrenceService {
       occurrence
     );
 
-    if (img) this.saveImg(img, createdOccurence.id);
+    if (img) await this.saveImg(img, createdOccurence.id);
 
     return createdOccurence;
   }
 
-  saveImg(img: any, id: any) {
+  async saveImg(img: any, id: any) {
     const storageRef = ref(this.storage, id);
-    const uploadTask = uploadBytesResumable(storageRef, img);
-    uploadTask.on(
+    const uploadTask = await uploadBytesResumable(storageRef, img).on(
       'state_changed',
       (snapshot) => {
         const progress = snapshot.bytesTransferred / snapshot.totalBytes;
+        console.log(progress);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {});
+        console.log('finished');
       }
     );
   }

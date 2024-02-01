@@ -20,6 +20,7 @@ import { switchMap } from 'rxjs/operators';
 import { User } from '@angular/fire/auth';
 import { Town } from 'src/app/shared/models/town.model';
 import { Citizen } from 'src/app/shared/models/citizen.model';
+import { NotifierService } from './notifier.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,8 @@ export class AuthService {
   constructor(
     private firestore: Firestore,
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private notifier: NotifierService
   ) {
     this.user$ = authState(this.auth as any).pipe(
       switchMap(async (user) => {
@@ -109,9 +111,7 @@ export class AuthService {
       })
       .catch(async (err) => {
         console.log(err);
-        alert(
-          'Login não foi bem-sucedido. Por favor, cheque seu email e senha'
-        );
+        this.notifier.notify('Aviso', 'salmon', 'Login não bem sucedido');
       });
   }
 
