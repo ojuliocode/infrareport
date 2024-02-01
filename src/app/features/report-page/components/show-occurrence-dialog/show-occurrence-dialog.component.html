@@ -1,5 +1,10 @@
 <p class="text-big-regular" mat-dialog-title>Ocorrência</p>
-<form mat-dialog-content class="container" mat-dialog-content>
+<form
+  mat-dialog-content
+  class="container"
+  mat-dialog-content
+  style="overflow-y: hidden"
+>
   <mat-dialog-content class="column">
     <mat-label> Tipo de ocorrência </mat-label>
     <mat-form-field class="full-width">
@@ -23,7 +28,7 @@
         [disabled]="true"
       />
     </mat-form-field>
-    <img alt="" id="myImg" width="350px" height="auto" loading="lazy" />
+    <img alt="" id="myImg" width="100%" height="auto" loading="lazy" />
     <div class="actions">
       <button mat-button (click)="closeDialog()">Fechar</button>
     </div>

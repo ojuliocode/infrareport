@@ -35,25 +35,34 @@ export class ShowOccurrenceDialogComponent implements OnInit {
   }
 
   async fetchImg() {
-    await getDownloadURL(ref(this.storage, this.occurrence.id))
-      .then(async (url) => {
-        // This can be downloaded directly:
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = 'blob';
-        xhr.onload = (event) => {
-          const blob = xhr.response;
-        };
-        xhr.open('GET', url);
-        xhr.send();
+    return new Promise(async (resolve, reject) => {
+      await getDownloadURL(ref(this.storage, this.occurrence.id))
+        .then(async (url) => {
+          console.log(url);
+          // This can be downloaded directly:
+          const xhr = new XMLHttpRequest();
+          xhr.responseType = 'blob';
+          xhr.open('GET', url);
+          xhr.send();
 
-        // Or inserted into an <img> element
-        const img = document.getElementById('myImg');
-        img?.setAttribute('src', url);
-      })
-      .catch((error) => {
-        console.log(error);
-        // Handle any errors
-      });
+          xhr.onload = (event) => {
+            const blob = xhr.response;
+          };
+
+          // Or inserted into an <img> element
+          const img = document.getElementById('myImg');
+          img?.setAttribute('src', url);
+
+          if (img) {
+            img.onload = () => resolve(true);
+            img.onerror = () => reject();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          // Handle any errors
+        });
+    });
   }
   closeDialog() {
     this.dialogRef.close();
