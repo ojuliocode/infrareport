@@ -1,0 +1,22 @@
+.notification {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 9999;
+}
+
+.notification-content {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.notification-content:hover {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.notification * {
+  color: white;
+}

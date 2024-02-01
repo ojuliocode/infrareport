@@ -7,6 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { NotifierService } from 'src/app/core/services/notifier.service';
 import { Town } from 'src/app/shared/models/town.model';
 import {
   FIREBASE_ERR_KEYS,
@@ -41,7 +42,8 @@ export class RegisterTownComponent implements OnInit {
   constructor(
     private fb: UntypedFormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notifier: NotifierService
   ) {}
   ngOnInit(): void {
     this.createUserForm = this.fb.group({
@@ -62,9 +64,10 @@ export class RegisterTownComponent implements OnInit {
     } catch (err: any) {
       const errorCode = err.code as string;
       const index = FIREBASE_ERR_KEYS.indexOf(errorCode);
-      index != -1
-        ? alert(FIREBASE_ERR_MESSAGES[index])
-        : alert('Ocorreu um erro');
+      const message =
+        index != -1 ? FIREBASE_ERR_MESSAGES[index] : 'Ocorreu um erro';
+
+      this.notifier.notify('Aviso', 'salmon', message);
     }
   }
 

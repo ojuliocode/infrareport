@@ -17,6 +17,7 @@ import { OccurrenceService } from 'src/app/core/services/occurrence.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Occurrence } from 'src/app/shared/models/occurrence.model';
 import { ShowOccurrenceDialogComponent } from '../show-occurrence-dialog/show-occurrence-dialog.component';
+import { NotifierService } from 'src/app/core/services/notifier.service';
 
 // TODO: se usuario for cidadao, zoom e latitude inicial vao ser X. Caso cidade, vai ser Y
 // TODO: se a ocorrencia for varias vezes a mesma, ver como da pra agrupar na hora de resolver
@@ -42,7 +43,8 @@ export class MapComponent
     private dialog: MatDialog,
     private authService: AuthService,
     private occurrenceService: OccurrenceService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private notifier: NotifierService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']?.currentValue) {
@@ -124,7 +126,11 @@ export class MapComponent
           lat: 10,
           lng: 6,
         };
-        alert('Localidade não foi fornecida');
+        this.notifier.notify(
+          'Aviso',
+          'salmon',
+          'A localidade não foi fornecida'
+        );
       })
       .finally(() => {
         loader
