@@ -1,4 +1,5 @@
 export interface Occurrence {
+  solved: boolean;
   id: string;
   createdBy: string;
   type: string;

@@ -36,6 +36,7 @@ export class CreateOccurrenceDialogComponent implements OnInit {
       lat: 0,
       lng: 0,
     },
+    solved: false,
   };
 
   img: File;
@@ -107,6 +108,7 @@ export class CreateOccurrenceDialogComponent implements OnInit {
       lat: this.data.location.lat,
       lng: this.data.location.lng,
     };
+    this.occurrence.solved = false;
   }
 
   fileHandler(e: any) {

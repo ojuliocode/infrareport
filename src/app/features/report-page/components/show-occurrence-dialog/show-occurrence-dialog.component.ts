@@ -6,6 +6,9 @@ import { OCCURRENCE_TYPES } from 'src/app/shared/constants/occurrence.constants'
 import { Occurrence } from 'src/app/shared/models/occurrence.model';
 import { Storage, getDownloadURL, ref } from '@angular/fire/storage';
 import { SpinnerService } from 'src/app/core/services/spinner.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { OccurrenceService } from 'src/app/core/services/occurrence.service';
+import { NotifierService } from 'src/app/core/services/notifier.service';
 
 @Component({
   selector: 'app-show-occurrence-dialog',
@@ -17,13 +20,19 @@ export class ShowOccurrenceDialogComponent implements OnInit {
   createOcurrenceForm: UntypedFormGroup;
   public occurrence: Occurrence = this.data['occurrence'];
   public imgLoaded = false;
+  public userType: any;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Data,
     public dialogRef: MatDialogRef<ShowOccurrenceDialogComponent>,
     private storage: Storage,
-    private spinner: SpinnerService
+    private spinner: SpinnerService,
+    private authService: AuthService,
+    private occurrenceService: OccurrenceService,
+    private notifier: NotifierService
   ) {}
   async ngOnInit() {
+    this.userType = this.authService.type;
     this.spinner.show();
     await this.fetchImg()
       .then(() => {
@@ -38,7 +47,6 @@ export class ShowOccurrenceDialogComponent implements OnInit {
     return new Promise(async (resolve, reject) => {
       await getDownloadURL(ref(this.storage, this.occurrence.id))
         .then(async (url) => {
-          console.log(url);
           // This can be downloaded directly:
           const xhr = new XMLHttpRequest();
           xhr.responseType = 'blob';
@@ -66,5 +74,28 @@ export class ShowOccurrenceDialogComponent implements OnInit {
   }
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  async changeSolvedState(solved: boolean) {
+    this.spinner.show();
+
+    const occ = { ...this.data['occurrence'], solved: !solved };
+    try {
+      await this.occurrenceService.updateOccurrence(
+        this.data['occurrence'].id,
+        occ,
+        this.authService.userId
+      );
+      this.notifier.notify(
+        'Sucesso',
+        'green',
+        `Ocorrência ${solved ? 'reaberta' : 'resolvida'} com sucesso`
+      );
+      this.dialogRef.close();
+    } catch (err) {
+      this.notifier.notify('Aviso', 'salmon', 'Ocorreu um erro');
+    } finally {
+      this.spinner.hide();
+    }
   }
 }

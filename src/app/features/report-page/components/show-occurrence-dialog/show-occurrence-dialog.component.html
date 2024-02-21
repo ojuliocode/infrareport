@@ -31,6 +31,15 @@
     <img alt="" id="myImg" width="100%" height="auto" loading="lazy" />
     <div class="actions">
       <button mat-button (click)="closeDialog()">Fechar</button>
+      <button
+        mat-raised-button
+        *ngIf="userType == 'town'"
+        (click)="changeSolvedState(occurrence.solved)"
+        color="primary"
+      >
+        {{ occurrence.solved == false ? "Resolver" : "Reabrir" }}
+        ocorrência
+      </button>
     </div>
   </mat-dialog-content>
 </form>
