@@ -80,7 +80,13 @@ export class MapComponent
           lng: occurrence.location.lng,
         },
         map: this.map,
-        title: 'bogos',
+        title: occurrence.comment,
+        icon: {
+          url: `https://maps.google.com/mapfiles/ms/icons/${
+            occurrence.solved ? 'green' : 'red'
+          }-dot.png`,
+          scaledSize: new google.maps.Size(38, 38), // scaled size
+        },
       });
 
       a.setMap(this.map);
@@ -92,6 +98,7 @@ export class MapComponent
           },
           enterAnimationDuration: '200ms',
           exitAnimationDuration: '200ms',
+          maxWidth: '50vw',
         });
       });
     });
@@ -169,7 +176,13 @@ export class MapComponent
                   lng: occurrence.location.lng,
                 },
                 map: this.map,
-                title: 'bogos',
+                title: occurrence.comment,
+                icon: {
+                  url: `https://maps.google.com/mapfiles/ms/icons/${
+                    occurrence.solved ? 'green' : 'red'
+                  }-dot.png`,
+                  scaledSize: new google.maps.Size(38, 38), // scaled size
+                },
               });
               a.setMap(this.map);
               a.addListener('click', (mapsMouseEvent: any) => {
@@ -180,6 +193,7 @@ export class MapComponent
                   },
                   enterAnimationDuration: '200ms',
                   exitAnimationDuration: '200ms',
+                  maxWidth: '50vw',
                 });
               });
             });

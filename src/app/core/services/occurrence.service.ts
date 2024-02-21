@@ -7,9 +7,11 @@ import {
   collection,
   collectionData,
   doc,
+  getDoc,
   onSnapshot,
   query,
   setDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { Occurrence } from 'src/app/shared/models/occurrence.model';
 import { AuthService } from './auth.service';
@@ -121,13 +123,42 @@ export class OccurrenceService {
     return createdOccurence;
   }
 
+  /**
+   * Updates an existing occurrence
+   * @param occurrenceId {string} ID of the occurrence to be updated
+   * @param occurrence {Occurrence} Updated occurrence data
+   * @param townId {string} ID of the town where the occurrence is located
+   * @param img {File} Optional image to update
+   * @returns {Promise}
+   */
+  async updateOccurrence(
+    occurrenceId: string,
+    occurrence: Partial<Occurrence>,
+    townId: string,
+    img?: File
+  ): Promise<DocumentData> {
+    const updatedOccurrenceRef = doc(
+      this.firestore,
+      `town_list/${townId}/occurrences`,
+      occurrenceId
+    );
+
+    // Update the occurrence data
+    await updateDoc(updatedOccurrenceRef, occurrence);
+
+    // If an image is provided, update it as well
+    if (img) await this.saveImg(img, occurrenceId);
+
+    // Return the updated occurrence
+    return getDoc(updatedOccurrenceRef);
+  }
+
   async saveImg(img: any, id: any) {
     const storageRef = ref(this.storage, id);
     const uploadTask = await uploadBytesResumable(storageRef, img).on(
       'state_changed',
       (snapshot) => {
         const progress = snapshot.bytesTransferred / snapshot.totalBytes;
-        console.log(progress);
       },
       () => {
         console.log('finished');
