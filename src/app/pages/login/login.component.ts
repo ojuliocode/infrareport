@@ -38,19 +38,27 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    alert("Pagina temporariamente desativada");
+    /*
     this.fillForm();
     this.authService.signIn(this.email, this.password);
+    */
   }
 
   /**
    * Fills the local variables with form values
    */
   private fillForm() {
+    /*
     this.email = this.loginForm.get('email')?.value;
     this.password = this.loginForm.get('password')?.value;
+    */
   }
 
   register(type: string) {
+    alert("Pagina temporariamente desativada");
+    /*
     this.router.navigate([`/register-${type}`]);
+    */
   }
 }
